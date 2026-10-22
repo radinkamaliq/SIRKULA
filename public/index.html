@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIRKULA — Rescue Food. Rethink Waste.</title>
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/landing.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path fill=%22%23173F35%22 d=%22M12 2L2 7l10 5 10-5-10-5z%22/></svg>">
+</head>
+<body>
+<div class="layout">
+  <header class="header">
+    <a href="/index.html" class="brand" aria-label="SIRKULA home">
+      <span class="brand-mark">S</span> SIRKULA
+    </a>
+    <div class="header-actions">
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">${icon('menu')}</button>
+      <a href="/marketplace.html" class="btn btn-outline">Explore Surplus Food</a>
+      <a href="/register.html" data-auth="false" class="btn btn-primary">Join SIRKULA</a>
+      <a href="/dashboard.html" data-auth="true" style="display:none" class="btn btn-primary">Dashboard</a>
+      <a href="/login.html" data-auth="false" style="margin-left:0.5rem" class="btn btn-outline">Log in</a>
+      <button data-action="logout" data-auth="true" style="display:none;margin-left:0.5rem" class="btn btn-outline">Log out</button>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar" data-role="SELLER,ADMIN" style="display:none">
+    <div class="sidebar-header">SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="sidebar-item active"><span class="icon-wrap">${icon('home')}</span>Dashboard</a>
+      <a href="/marketplace.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Marketplace</a>
+      <a href="/seller-inventory.html" class="sidebar-item" data-role="SELLER"><span class="icon-wrap">${icon('layout')}</span>Inventory</a>
+      <a href="/create-listing.html" class="sidebar-item" data-role="SELLER"><span class="icon-wrap">${icon('plus')}</span>New Listing</a>
+      <a href="/reservations.html" class="sidebar-item"><span class="icon-wrap">${icon('clock')}</span>Reservations</a>
+      <a href="/notifications.html" class="sidebar-item"><span class="icon-wrap">${icon('bell')}</span>Notifications</a>
+      <a href="/profile.html" class="sidebar-item"><span class="icon-wrap">${icon('user')}</span>Profile</a>
+    </nav>
+  </aside>
+
+  <div class="main" style="margin-left:0; width:100%">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <span class="hero-kicker">Food Security &bull; S-Tech 2026</span>
+            <h1>Good Food Deserves Another Chance.</h1>
+            <p class="hero-lead">Every day, tonnes of safe surplus food go to waste while families go hungry. SIRKULA connects sellers with surplus food to communities that need it—rescuing good food before it becomes waste.</p>
+            <div class="hero-cta">
+              <a href="/marketplace.html" class="btn btn-primary btn-block">Explore Surplus Food</a>
+              <a href="/register.html" class="btn btn-outline btn-block">Join SIRKULA</a>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="visual-card">
+              <div class="icon-wrap" style="background:var(--color-lime);color:var(--color-deep)">${icon('leaf')}</div>
+              <h3>Surplus Food Redistribution</h3>
+              <p>List, discover, and rescue safe surplus food with transparent pickup workflows.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section how-it-works">
+      <div class="container">
+        <h2>How SIRKULA works</h2>
+        <p class="section-sub">Three steps to rescue surplus food.</p>
+        <div class="steps-grid">
+          <div class="step"><div class="step-num">1</div><h3>List surplus</h3><p>Sellers list safe surplus food with quantity, pickup location, and deadline.</p></div>
+          <div class="step"><div class="step-num">2</div><h3>Reserve</h3><p>Receivers browse, search, and request available food near them.</p></div>
+          <div class="step"><div class="step-num">3</div><h3>Pick up</h3><p>Sellers approve, receivers collect, and both confirm the redistribution.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured listings (from database) -->
+    <section class="section featured">
+      <div class="container">
+        <h2>Featured Surplus Food</h2>
+        <p class="section-sub">Available listings posted by sellers on SIRKULA.</p>
+        <div id="featured-listings" class="listing-grid"></div>
+        <div class="text-center" style="margin-top:1rem"><a href="/marketplace.html" class="btn btn-outline">View all listings</a></div>
+      </div>
+    </section>
+
+    <!-- Impact statistics -->
+    <section class="section impact" style="background:var(--color-deep);color:var(--color-white)">
+      <div class="container">
+        <h2 style="color:var(--color-white)">Community Impact</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.8)">Figures computed from platform activity. Demo data clearly labeled.</p>
+        <div id="impact-stats" class="stats-grid"></div>
+        <p class="section-sub" style="margin-top:1.5rem;opacity:0.8">Data source: SIRKULA platform database. "Sample" figures reflect demo data, not verified real-world results.</p>
+      </div>
+    </section>
+
+    <!-- Process & benefits -->
+    <section class="section process-benefits">
+      <div class="container">
+        <div class="two-col">
+          <div class="card">
+            <h3>The food redistribution process</h3>
+            <ol style="padding-left:1.2rem">
+              <li>Seller lists surplus food with condition &amp; pickup deadline.</li>
+              <li>Listing auto-flags as expired after the deadline passes.</li>
+              <li>Receiver requests an available quantity.</li>
+              <li>Seller approves or rejects; inventory reserved transactionally.</li>
+              <li>Receiver picks up; seller marks completion.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>Who benefits</h3>
+            <ul style="padding-left:1.2rem">
+              <li><strong>Sellers:</strong> Reduce waste disposal costs; reach community buyers.</li>
+              <li><strong>Receivers:</strong> Access safe, affordable surplus food.</li>
+              <li><strong>Community:</strong> Less food waste, better food security.</li>
+            </ul>
+            <p class="helper" style="margin-top:1rem">SIRKULA does not replace official food safety inspections or regulations. Listings are not certified safe without verification.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div><span class="brand-mark">S</span><strong>SIRKULA</strong><br><span style="opacity:0.7">Rescue Food. Rethink Waste.</span></div>
+          <div>
+            <h4>Platform</h4>
+            <p><a href="/marketplace.html">Marketplace</a></p>
+            <p><a href="/dashboard.html">Dashboard</a></p>
+          </div>
+          <div>
+            <h4>Contact (placeholder)</h4>
+            <p>support@sirkula.example</p>
+            <p>S-Tech 2026 &bull; Web Development</p>
+          </div>
+        </div>
+        <div class="footer-note">SIRKULA demo platform. Sample data clearly labeled; no unverified real-world impact claimed.</div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <button id="mobile-drawer-close" class="btn" style="padding:0.4rem">${icon('close')}</button>
+      SIRKULA
+    </div>
+    <nav>
+      <a href="/index.html" class="mobile-item">Home</a>
+      <a href="/marketplace.html" class="mobile-item">Marketplace</a>
+      <a href="/dashboard.html" class="mobile-item" data-auth="true" style="display:none">Dashboard</a>
+      <a href="/seller-inventory.html" class="mobile-item" data-role="SELLER" style="display:none">Inventory</a>
+      <a href="/reservations.html" class="mobile-item" data-auth="true" style="display:none">Reservations</a>
+      <a href="/notifications.html" class="mobile-item" data-auth="true" style="display:none">Notifications</a>
+      <a href="/profile.html" class="mobile-item" data-auth="true" style="display:none">Profile</a>
+      <a href="/login.html" class="mobile-item" data-auth="false" style="display:none">Log in</a>
+      <a href="/register.html" class="mobile-item" data-auth="false" style="display:none">Join</a>
+      <button data-action="logout" class="mobile-item" data-auth="true" style="display:none">Log out</button>
+    </nav>
+  </div>
+</div>
+
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/landing.js"></script>
+</body>
+</html>

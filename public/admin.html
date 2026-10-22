@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — SIRKULA</title>
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="layout">
+  <header class="header">
+    <a href="/admin.html" class="brand">${icon('shield')} <span style="margin-left:0.4rem">Admin</span></a>
+    <div class="header-actions">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">${icon('menu')}</button>
+      <a href="/dashboard.html" class="btn btn-outline">Dashboard</a>
+      <a href="/profile.html" class="btn btn-outline"><span class="icon-wrap">${icon('user')}</span></a>
+      <button data-action="logout" class="btn btn-outline">Log out</button>
+    </div>
+  </header>
+  <aside class="sidebar">
+    <div class="sidebar-header">SIRKULA Admin</div>
+    <nav>
+      <a href="/admin.html" class="sidebar-item active"><span class="icon-wrap">${icon('database')}</span>Overview</a>
+      <a href="#users" class="sidebar-item"><span class="icon-wrap">${icon('users')}</span>Users</a>
+      <a href="#listings" class="sidebar-item"><span class="icon-wrap">${icon('layout')}</span>Listings</a>
+      <a href="#reports" class="sidebar-item"><span class="icon-wrap">${icon('alertCircle')}</span>Reports</a>
+      <a href="#audit" class="sidebar-item"><span class="icon-wrap">${icon('layout')}</span>Audit Log</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="container">
+      <h1>Admin Dashboard</h1>
+      <p style="color:var(--color-muted);margin-bottom:1rem">Platform-wide moderation. Admin-only area.</p>
+      <div class="stats-grid" id="adminStats"></div>
+
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-header"><h3>User Management</h3></div>
+        <div class="card-body table-wrap" id="adminUsers"></div>
+      </div>
+      <div class="card" style="margin-top:1rem">
+        <div class="card-header"><h3>Listing Moderation</h3></div>
+        <div class="card-body table-wrap" id="adminListings"></div>
+      </div>
+      <div class="card" style="margin-top:1rem">
+        <div class="card-header"><h3>Reports</h3></div>
+        <div class="card-body table-wrap" id="adminReports"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header"><button id="mobile-drawer-close" class="btn" style="padding:0.4rem">${icon('close')}</button>Admin</div>
+    <nav>
+      <a href="/admin.html" class="mobile-item active">Overview</a>
+      <a href="#users" class="mobile-item">Users</a>
+      <a href="#listings" class="mobile-item">Listings</a>
+      <a href="#reports" class="mobile-item">Reports</a>
+      <a href="#audit" class="mobile-item">Audit Log</a>
+      <button data-action="logout" class="mobile-item">Log out</button>
+    </nav>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

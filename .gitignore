@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment variables (secrets — never commit)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build / output
+dist/
+build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Prisma
+prisma/migrations/*.lock
+prisma/dev.db
+
+# User uploads (runtime content)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temporary / downloads
+temp/
+*.tmp

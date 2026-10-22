@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory — SIRKULA</title>
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="layout">
+  <header class="header">
+    <a href="/dashboard.html" class="brand">${icon('layout')} <span style="margin-left:0.4rem">Inventory</span></a>
+    <div class="header-actions">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">${icon('menu')}</button>
+      <a href="/create-listing.html" class="btn btn-primary">+ New Listing</a>
+      <a href="/notifications.html" class="btn btn-outline" style="position:relative"><span class="icon-wrap">${icon('bell')}</span><span id="nav-notif-count" class="notif-badge">0</span></a>
+      <a href="/profile.html" class="btn btn-outline"><span class="icon-wrap">${icon('user')}</span></a>
+      <button data-action="logout" class="btn btn-outline">Log out</button>
+    </div>
+  </header>
+  <aside class="sidebar">
+    <div class="sidebar-header">SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Dashboard</a>
+      <a href="/marketplace.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Marketplace</a>
+      <a href="/seller-inventory.html" class="sidebar-item active"><span class="icon-wrap">${icon('layout')}</span>Inventory</a>
+      <a href="/create-listing.html" class="sidebar-item"><span class="icon-wrap">${icon('plus')}</span>New Listing</a>
+      <a href="/reservations.html" class="sidebar-item"><span class="icon-wrap">${icon('clock')}</span>Reservations</a>
+      <a href="/notifications.html" class="sidebar-item"><span class="icon-wrap">${icon('bell')}</span>Notifications</a>
+      <a href="/profile.html" class="sidebar-item"><span class="icon-wrap">${icon('user')}</span>Profile</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="container">
+      <h1>Inventory Management</h1>
+      <p style="color:var(--color-muted);margin-bottom:1rem">Create, edit, and manage your surplus food listings.</p>
+      <div class="field" style="margin-bottom:1rem;max-width:260px">
+        <label>Filter by status</label>
+        <select id="invStatus"><option value="">All</option><option value="AVAILABLE">Available</option><option value="RESERVED">Reserved</option><option value="UNAVAILABLE">Unavailable</option><option value="EXPIRED">Expired</option></select>
+      </div>
+      <div id="invListings"></div>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header"><button id="mobile-drawer-close" class="btn" style="padding:0.4rem">${icon('close')}</button>SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="mobile-item">Dashboard</a>
+      <a href="/marketplace.html" class="mobile-item">Marketplace</a>
+      <a href="/seller-inventory.html" class="mobile-item active">Inventory</a>
+      <a href="/reservations.html" class="mobile-item">Reservations</a>
+      <a href="/profile.html" class="mobile-item">Profile</a>
+      <button data-action="logout" class="mobile-item">Log out</button>
+    </nav>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/seller-inventory.js"></script>
+</body>
+</html>

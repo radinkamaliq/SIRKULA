@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact — SIRKULA</title>
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body>
+<div class="layout">
+  <header class="header">
+    <a href="/dashboard.html" class="brand">${icon('barChart')} <span style="margin-left:0.4rem">Impact</span></a>
+    <div class="header-actions">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">${icon('menu')}</button>
+      <a href="/profile.html" class="btn btn-outline"><span class="icon-wrap">${icon('user')}</span></a>
+      <button data-action="logout" class="btn btn-outline">Log out</button>
+    </div>
+  </header>
+  <aside class="sidebar">
+    <div class="sidebar-header">SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Dashboard</a>
+      <a href="/marketplace.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Marketplace</a>
+      <a href="/impact.html" class="sidebar-item active"><span class="icon-wrap">${icon('barChart')}</span>Impact</a>
+      <a href="/reservations.html" class="sidebar-item"><span class="icon-wrap">${icon('clock')}</span>Reservations</a>
+      <a href="/profile.html" class="sidebar-item"><span class="icon-wrap">${icon('user')}</span>Profile</a>
+      <a href="/admin.html" class="sidebar-item" data-role="ADMIN"><span class="icon-wrap">${icon('shield')}</span>Admin</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="container">
+      <h1>Impact Dashboard</h1>
+      <p style="color:var(--color-muted);margin-bottom:1rem">All figures come from real aggregated database data. Demo data is clearly labeled.</p>
+      <div class="stats-grid" id="impactStats"></div>
+      <div style="display:grid;grid-template-columns: 1fr 1fr; gap:1.5rem;margin-top:1.5rem">
+        <div class="card" style="height:100%"><div class="card-header"><h3>Distribution Trend (30 days)</h3></div><div class="card-body" style="height:300px"><canvas id="trendChart"></canvas></div></div>
+        <div class="card" style="height:100%"><div class="card-header"><h3>Distribution by Category</h3></div><div class="card-body" style="height:300px"><canvas id="categoryChart"></canvas></div></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--color-muted);margin-top:1rem">Estimates of waste avoided are based on distributed quantity and labeled as estimates; they are not verified real-world impact.</p>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header"><button id="mobile-drawer-close" class="btn" style="padding:0.4rem">${icon('close')}</button>SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="mobile-item">Dashboard</a>
+      <a href="/marketplace.html" class="mobile-item">Marketplace</a>
+      <a href="/impact.html" class="mobile-item active">Impact</a>
+      <a href="/profile.html" class="mobile-item">Profile</a>
+      <button data-action="logout" class="mobile-item">Log out</button>
+    </nav>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/impact.js"></script>
+</body>
+</html>

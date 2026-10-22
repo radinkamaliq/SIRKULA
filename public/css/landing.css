@@ -1,0 +1,61 @@
+/* SIRKULA — Landing page */
+.hero {
+  background: linear-gradient(135deg, var(--color-deep) 0%, var(--color-forest) 60%, var(--color-fresh) 100%);
+  color: var(--color-white);
+  padding: 4rem 1rem 3rem;
+}
+.hero .container { position: relative; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
+.hero-kicker { display: inline-block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: var(--color-lime); margin-bottom: 0.75rem; }
+.hero h1 { font-size: 2.75rem; color: var(--color-white); margin: 0 0 1rem; line-height: 1.15; }
+.hero-lead { font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; line-height: 1.6; max-width: 480px; }
+.hero-cta { display: flex; flex-direction: column; gap: 0.75rem; }
+.hero-cta .btn-block { text-align: center; }
+.visual-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-lg); padding: 1.5rem; backdrop-filter: blur(6px); }
+.visual-card .icon-wrap { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.75rem; font-size: 1.4rem; }
+.visual-card h3 { color: var(--color-white); margin: 0 0 0.5rem; }
+.visual-card p { color: rgba(255,255,255,0.85); margin: 0; font-size: 0.95rem; }
+
+.hero-cta .btn { background: var(--color-white); color: var(--color-deep); border-color: var(--color-white); }
+.hero-cta .btn:hover:not(:disabled) { background: var(--color-lime); color: var(--color-deep); }
+
+.how-it-works { background: var(--color-white); }
+.how-it-works .section-sub { color: var(--color-muted); max-width: 600px; margin: 0 auto 2rem; text-align: center; }
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem; }
+.step { background: var(--color-ivory); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+.step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--color-forest); color: var(--color-white); font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.8rem; }
+.step h3 { margin: 0 0 0.6rem; }
+.step p { font-size: 0.9rem; color: var(--color-charcoal); margin: 0; }
+
+.listing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1rem; }
+.listing-card { display: flex; flex-direction: column; height: 100%; }
+.listing-card .card-body h4 { font-size: 1rem; }
+
+.impact { padding: 4rem 1rem 3rem; }
+.impact .section-sub { color: rgba(255,255,255,0.8); max-width: 600px; margin-bottom: 2rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center; }
+.stat-value { font-size: 2rem; font-weight: 800; color: var(--color-lime); margin-bottom: 0.25rem; }
+.stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.8); }
+
+.process-benefits { background: var(--color-white); }
+.process-benefits .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+.process-benefits ol, .process-benefits ul { color: var(--color-charcoal); }
+.process-benefits li { margin-bottom: 0.5rem; }
+
+.footer { background: var(--color-deep); color: var(--color-white); padding: 3rem 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); }
+.footer a { color: var(--color-lime); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer h4 { color: var(--color-white); font-size: 0.95rem; margin-bottom: 0.75rem; }
+.footer p { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 0.35rem 0; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+.footer-note { font-size: 0.8rem; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; }
+
+.text-center { text-align: center; }
+
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .process-benefits .two-col { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2rem; }
+}

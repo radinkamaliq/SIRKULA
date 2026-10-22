@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — SIRKULA</title>
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+<style>
+  .stat-card { background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow-sm); }
+  .stat-value { font-size:1.75rem;font-weight:800;color:var(--color-deep); }
+  .stat-label { font-size:0.85rem;color:var(--color-muted); }
+</style>
+</head>
+<body>
+<div class="layout">
+  <header class="header">
+    <a href="/dashboard.html" class="brand">${icon('home')} <span style="margin-left:0.4rem">SIRKULA</span></a>
+    <div class="header-actions">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">${icon('menu')}</button>
+      <a href="/notifications.html" class="btn btn-outline" style="position:relative"><span class="icon-wrap">${icon('bell')}</span><span id="nav-notif-count" class="notif-badge">0</span></a>
+      <a href="/profile.html" class="btn btn-outline"><span class="icon-wrap">${icon('user')}</span></a>
+      <a href="/marketplace.html" class="btn btn-outline">Marketplace</a>
+      <button data-action="logout" class="btn btn-outline">Log out</button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-header">SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="sidebar-item active"><span class="icon-wrap">${icon('home')}</span>Dashboard</a>
+      <a href="/marketplace.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Marketplace</a>
+      <a href="/seller-inventory.html" class="sidebar-item" data-role="SELLER"><span class="icon-wrap">${icon('layout')}</span>Inventory</a>
+      <a href="/create-listing.html" class="sidebar-item" data-role="SELLER"><span class="icon-wrap">${icon('plus')}</span>New Listing</a>
+      <a href="/reservations.html" class="sidebar-item"><span class="icon-wrap">${icon('clock')}</span>Reservations</a>
+      <a href="/notifications.html" class="sidebar-item"><span class="icon-wrap">${icon('bell')}</span>Notifications</a>
+      <a href="/profile.html" class="sidebar-item"><span class="icon-wrap">${icon('user')}</span>Profile</a>
+      <a href="/admin.html" class="sidebar-item" data-role="ADMIN"><span class="icon-wrap">${icon('shield')}</span>Admin</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <div class="container">
+      <div class="dashboard-header" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem">
+        <div>
+          <h1>Dashboard, <span id="dash-name" data-user-name></span></h1>
+          <p id="dash-welcome" style="color:var(--color-muted);font-size:0.95rem"></p>
+        </div>
+        <div class="notif-badge" id="dash-notif-count" style="background:var(--color-danger);color:var(--color-white);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700">0</div>
+      </div>
+
+      <!-- Role stats -->
+      <div class="stats-grid" id="dash-stats"></div>
+
+      <div class="row" style="display:grid;grid-template-columns: 1fr 1fr; gap:1.5rem;margin-top:1.5rem">
+        <div class="card" style="height:100%">
+          <div class="card-header"><h3>Recent Activity</h3></div>
+          <div class="card-body" id="dash-activity"></div>
+        </div>
+        <div class="card" style="height:100%">
+          <div class="card-header"><h3>Quick Actions</h3></div>
+          <div class="card-body" id="dash-actions"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem">
+        <div class="card-header"><h3>Recent Listings / Reservations</h3></div>
+        <div class="card-body table-wrap" id="dash-table"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header"><button id="mobile-drawer-close" class="btn" style="padding:0.4rem">${icon('close')}</button>SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="mobile-item active">Dashboard</a>
+      <a href="/marketplace.html" class="mobile-item">Marketplace</a>
+      <a href="/seller-inventory.html" class="mobile-item" data-role="SELLER" style="display:none">Inventory</a>
+      <a href="/reservations.html" class="mobile-item">Reservations</a>
+      <a href="/notifications.html" class="mobile-item">Notifications</a>
+      <a href="/profile.html" class="mobile-item">Profile</a>
+      <a href="/admin.html" class="mobile-item" data-role="ADMIN" style="display:none">Admin</a>
+      <button data-action="logout" class="mobile-item">Log out</button>
+    </nav>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

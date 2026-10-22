@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile — SIRKULA</title>
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="layout">
+  <header class="header">
+    <a href="/dashboard.html" class="brand">${icon('user')} <span style="margin-left:0.4rem">Profile</span></a>
+    <div class="header-actions">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">${icon('menu')}</button>
+      <a href="/dashboard.html" class="btn btn-outline">Dashboard</a>
+      <button data-action="logout" class="btn btn-outline">Log out</button>
+    </div>
+  </header>
+  <aside class="sidebar">
+    <div class="sidebar-header">SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Dashboard</a>
+      <a href="/marketplace.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Marketplace</a>
+      <a href="/reservations.html" class="sidebar-item"><span class="icon-wrap">${icon('clock')}</span>Reservations</a>
+      <a href="/profile.html" class="sidebar-item active"><span class="icon-wrap">${icon('user')}</span>Profile</a>
+      <a href="/admin.html" class="sidebar-item" data-role="ADMIN"><span class="icon-wrap">${icon('shield')}</span>Admin</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="container">
+      <h1>Profile &amp; Settings</h1>
+      <div style="display:grid;grid-template-columns: 1fr 320px; gap:2rem">
+        <div>
+          <div class="card" style="margin-bottom:1rem">
+            <div class="card-body">
+              <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+                <div class="avatar">${initials('User')}</div>
+                <div>
+                  <div style="font-weight:700" id="profName"></div>
+                  <div style="font-size:0.85rem;color:var(--color-muted)" id="profEmail"></div>
+                  <div style="font-size:0.8rem;color:var(--color-fresh);font-weight:700;text-transform:uppercase" id="profRole"></div>
+                </div>
+              </div>
+              <p><strong>Status:</strong> <span id="profStatus"></span></p>
+              <p><strong>Phone:</strong> <span id="profPhone">—</span></p>
+              <p><strong>Address:</strong> <span id="profAddress">—</span></p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Edit profile</h3></div>
+            <div class="card-body">
+              <form id="profileForm" novalidate>
+                <div class="field"><label>Full name</label><input type="text" name="name" required><div class="error-text" id="pNameErr"></div></div>
+                <div class="field"><label>Phone</label><input type="text" name="phone" placeholder="+62 8xx..."><div class="error-text" id="pPhoneErr"></div></div>
+                <div class="field"><label>Address / pickup location</label><input type="text" name="address" placeholder="e.g. Jl. Merdeka No. 10"><div class="error-text" id="pAddrErr"></div></div>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </form>
+              <div id="profileMsg" style="margin-top:1rem"></div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:1rem">
+            <div class="card-header"><h3>Change password</h3></div>
+            <div class="card-body">
+              <form id="passwordForm" novalidate>
+                <div class="field"><label>Current password</label><input type="password" name="currentPassword" required><div class="error-text" id="cpErr"></div></div>
+                <div class="field"><label>New password</label><input type="password" name="newPassword" required><div class="helper">8+ chars, uppercase, lowercase, number.</div><div class="error-text" id="npErr"></div></div>
+                <button type="submit" class="btn btn-primary">Change password</button>
+              </form>
+              <div id="passwordMsg" style="margin-top:1rem"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="position:sticky;top:80px">
+          <div class="card-body">
+            <h4>Account</h4>
+            <p><strong>Role:</strong> <span id="acctRole"></span></p>
+            <p><strong>Status:</strong> <span id="acctStatus"></span></p>
+            <p class="helper" style="margin-top:1rem">SIRKULA never stores your password in plain text. Sessions are server-side with HttpOnly cookies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header"><button id="mobile-drawer-close" class="btn" style="padding:0.4rem">${icon('close')}</button>SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="mobile-item">Dashboard</a>
+      <a href="/profile.html" class="mobile-item active">Profile</a>
+      <button data-action="logout" class="mobile-item">Log out</button>
+    </nav>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/profile.js"></script>
+</body>
+</html>

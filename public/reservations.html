@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservations — SIRKULA</title>
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="layout">
+  <header class="header">
+    <a href="/dashboard.html" class="brand">${icon('clock')} <span style="margin-left:0.4rem">Reservations</span></a>
+    <div class="header-actions">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">${icon('menu')}</button>
+      <a href="/notifications.html" class="btn btn-outline" style="position:relative"><span class="icon-wrap">${icon('bell')}</span><span id="nav-notif-count" class="notif-badge">0</span></a>
+      <a href="/profile.html" class="btn btn-outline"><span class="icon-wrap">${icon('user')}</span></a>
+      <button data-action="logout" class="btn btn-outline">Log out</button>
+    </div>
+  </header>
+  <aside class="sidebar">
+    <div class="sidebar-header">SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Dashboard</a>
+      <a href="/marketplace.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Marketplace</a>
+      <a href="/seller-inventory.html" class="sidebar-item" data-role="SELLER"><span class="icon-wrap">${icon('layout')}</span>Inventory</a>
+      <a href="/reservations.html" class="sidebar-item active"><span class="icon-wrap">${icon('clock')}</span>Reservations</a>
+      <a href="/notifications.html" class="sidebar-item"><span class="icon-wrap">${icon('bell')}</span>Notifications</a>
+      <a href="/profile.html" class="sidebar-item"><span class="icon-wrap">${icon('user')}</span>Profile</a>
+      <a href="/admin.html" class="sidebar-item" data-role="ADMIN"><span class="icon-wrap">${icon('shield')}</span>Admin</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="container">
+      <h1>Reservations</h1>
+      <p style="color:var(--color-muted);margin-bottom:1rem" id="resSubtitle"></p>
+      <div class="field" style="margin-bottom:1rem;max-width:220px">
+        <label>Status</label>
+        <select id="resStatus"><option value="">All</option><option value="PENDING">Pending</option><option value="APPROVED">Approved</option><option value="REJECTED">Rejected</option><option value="CANCELLED">Cancelled</option><option value="COMPLETED">Completed</option></select>
+      </div>
+      <div id="resListings"></div>
+    </div>
+  </div>
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header"><button id="mobile-drawer-close" class="btn" style="padding:0.4rem">${icon('close')}</button>SIRKULA</div>
+    <nav>
+      <a href="/dashboard.html" class="mobile-item">Dashboard</a>
+      <a href="/marketplace.html" class="mobile-item">Marketplace</a>
+      <a href="/reservations.html" class="mobile-item active">Reservations</a>
+      <a href="/notifications.html" class="mobile-item">Notifications</a>
+      <a href="/profile.html" class="mobile-item">Profile</a>
+      <button data-action="logout" class="mobile-item">Log out</button>
+    </nav>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/reservations.js"></script>
+</body>
+</html>
