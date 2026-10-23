@@ -55,4 +55,27 @@ window.SIRKULA = window.SIRKULA || {};
 window.SIRKULA.ICONS = ICONS;
 window.SIRKULA.icon = icon;
 
+/* --- DOM initialization: replace ${icon('name')} text nodes with actual SVG --- */
+if (typeof window !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    function walkAndReplace(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.nodeValue || '';
+        const replaced = text.replace(/\$\{icon\(['"]([^'"]+)['"]\)\}/g, (match, name) => {
+          const svg = typeof ICONS[name] === 'string' ? ICONS[name] : ICONS.home;
+          return svg;
+        });
+        if (replaced !== text) {
+          const newNode = document.createTextNode(replaced);
+          node.parentNode.replaceChild(newNode, node);
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE && node.hasChildNodes()) {
+        node.childNodes.forEach(child => walkAndReplace(child));
+      }
+    }
+    walkAndReplace(document.body);
+  });
+}
+/* --------------------------------------------------------------- */
+
   
