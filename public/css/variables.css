@@ -1,51 +1,77 @@
 /* SIRKULA — Design tokens */
 :root {
-  /* Brand greens */
-  --color-forest: #123D32;
-  --color-deep: #102D24;
-  --color-fresh: #76B85A;
-  --color-lime: #C5E7A5;
-  --color-ivory: #F7F6EF;
+  /* ========== Color Palette ==========
+     Inspired by fresh food, sustainability, and community.
+     Forest: depth and growth | Deep: trust and stability
+     Fresh: vitality and food | Lime: freshness and action
+     Ivory: clean backdrop | Charcoal: readability
+  */
+  --color-ivory: #F8F6F2;
   --color-white: #FFFFFF;
-  --color-charcoal: #202A26;
-  --color-muted: #77827B;
-  --color-border: #E5E9E1;
+  --color-charcoal: #1E2120;
+  --color-charcoal-light: #4A4D4C;
+  --color-muted: #8C8E8C;
+  --color-border: #D1D5DB;
+  --color-border-soft: #E5E7EB;
 
-  /* Semantic colors */
-  --color-success: #1E7A3C;
-  --color-success-bg: #E3F4E8;
-  --color-warning: #B8860B;
-  --color-warning-bg: #FFF3CD;
-  --color-danger: #C0392B;
-  --color-danger-bg: #FBE9E7;
-  --color-info: #1F6FEB;
-  --color-info-bg: #E8F0FE;
+  /* Primary brand colors — SIRKULA green spectrum */
+  --color-forest: #145A3D;       /* Deep forest — primary brand, strong contrast */
+  --color-deep: #0F3E33;        /* Darkest forest — headers, active states */
+  --color-fresh: #68A94F;       /* Fresh green — subtle accents, success */
+  --color-lime: #A3D96B;        /* Light lime — hover highlights, active */
+  --color-sprout: #C6F6D6;      /* Very light lime — backgrounds */
 
-  /* Layout */
+  /* Secondary / accent colors */
+  --color-success: #27AE60;
+  --color-success-bg: #E8F6EF;
+  --color-warning: #D4A853;
+  --color-warning-bg: #FFF6E0;
+  --color-danger: #E74C3C;
+  --color-danger-bg: #FDECEC;
+  --color-info: #3498DB;
+  --color-info-bg: #EBF8FF;
+
+  /* ========== Layout ========== */
   --sidebar-width: 260px;
   --sidebar-collapsed-width: 72px;
   --header-height: 64px;
-  --max-width: 1160px;
-  --radius: 12px;
+  --max-width: 1200px;
+  --radius: 10px;
   --radius-sm: 8px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgba(16,45,36,0.08);
-  --shadow: 0 4px 12px rgba(16,45,36,0.10);
-  --shadow-lg: 0 8px 24px rgba(16,45,36,0.14);
+  --radius-lg: 14px;
 
-  /* Transitions */
-  --transition: 0.22s ease;
-  --transition-fast: 0.12s ease;
+  /* ========== Shadows ========== */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.12);
+  --shadow-inset: inset 0 1px 2px rgba(0,0,0,0.05);
 
-  /* Typography */
+  /* ========== Transitions ========== */
+  --transition: 0.2s ease;
+  --transition-fast: 0.15s ease;
+  --transition-colors: 0.2s ease;
+
+  /* ========== Typography ========== */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Merriweather', Georgia, serif;
   --font-size-base: 1rem;
-  --line-height-base: 1.55;
+  --line-height-base: 1.6;
+  --line-height-tight: 1.4;
 
-  /* z-index */
+  /* Heading scales */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 2.5rem;
+  --font-size-3xl: 3.5rem;
+
+  /* ========== z-index ========== */
   --z-dropdown: 100;
   --z-modal: 1000;
   --z-toast: 1100;
+  --z-sticky: 50;
 }
 
 [data-theme='dark'] {

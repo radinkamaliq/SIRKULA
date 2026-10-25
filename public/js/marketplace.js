@@ -1,5 +1,5 @@
-/* SIRKULA — Marketplace search/filter/sort/pagination */
-document.addEventListener('DOMContentLoaded', async () => {
+/* SIRKULA — Marketplace search/filter/sort/pagination (demo localStorage) */
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('marketSearch');
   const grid = document.getElementById('marketListings');
   const pag = document.getElementById('marketPagination');
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     sort: 'newest',
     page: 1,
     limit: 12,
-    lat: null, lng: null,
   };
 
   // Options for filters
@@ -30,43 +29,47 @@ document.addEventListener('DOMContentLoaded', async () => {
   fStatus.value = state.status;
   fSort.value = state.sort;
 
-  // Load categories
-  try {
-    const c = await window.SIRKULA.api.get('/marketplace/categories');
-    (c.data || []).forEach((cat) => {
-      const o = document.createElement('option'); o.value = cat; o.textContent = cat;
-      fCategory.appendChild(o);
-    });
-  } catch (_) {}
-
-  // Geolocation for nearest sort
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => { state.lat = pos.coords.latitude; state.lng = pos.coords.longitude; load(); },
-      () => {}
-    );
-  }
+  // Load categories from demo listings
+  const cats = [...new Set(window.SIRKULA.storage.getListings().map((l) => l.category))];
+  cats.forEach((cat) => {
+    const o = document.createElement('option');
+    o.value = cat;
+    o.textContent = cat;
+    fCategory.appendChild(o);
+  });
 
   async function load() {
-    const qs = new URLSearchParams();
-    if (state.q) qs.set('q', state.q);
-    if (state.category) qs.set('category', state.category);
-    if (state.condition) qs.set('condition', state.condition);
-    qs.set('status', state.status);
-    qs.set('sort', state.sort);
-    qs.set('page', state.page);
-    qs.set('limit', state.limit);
-    if (state.lat != null) { qs.set('lat', state.lat); qs.set('lng', state.lng); }
+    // Filter listings from local storage
+    let items = window.SIRKULA.storage.getListings({
+      q: state.q,
+      category: state.category,
+      status: state.status === '' ? undefined : state.status,
+    });
 
-    try {
-      const data = await window.SIRKULA.api.get('/marketplace?' + qs.toString());
-      const d = data.data || {};
-      render(d.listings || []);
-      renderPagination(d.total, d.page, d.limit);
-    } catch (e) {
-      grid.innerHTML = '<div class="empty-state"><p>Unable to load listings.</p></div>';
-      pag.innerHTML = '';
+    // Apply condition filter
+    if (state.condition) {
+      items = items.filter((l) => l.condition === state.condition);
     }
+
+    // Sort
+    if (state.sort === 'newest') {
+      items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (state.sort === 'deadline') {
+      items.sort((a, b) => new Date(a.pickupDeadline) - new Date(b.pickupDeadline));
+    } else if (state.sort === 'nearest') {
+      // nearest sort - keep creation order for demo
+    }
+
+    const total = items.length;
+    const totalPages = Math.ceil(total / state.limit) || 1;
+    if (state.page > totalPages) state.page = totalPages;
+    if (state.page < 1) state.page = 1;
+
+    const start = (state.page - 1) * state.limit;
+    const pageItems = items.slice(start, start + state.limit);
+
+    render(pageItems);
+    renderPagination(total, state.page, state.limit);
   }
 
   function render(listings) {
@@ -78,10 +81,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     listings.forEach((l) => {
       const card = document.createElement('div');
       card.className = 'card listing-card';
-      const dist = l._distance != null ? ` &bull; ${l._distance.toFixed(1)} km` : '';
       card.innerHTML = `
-        <div style="height:150px;overflow:hidden;border-bottom:1px solid var(--color-border)">
-          ${l.images && l.images[0] ? `<img src="/uploads/${l.images[0]}" alt="" style="width:100%;height:100%;object-fit:cover">` : `<div style="width:100%;height:100%;background:var(--color-ivory);display:flex;align-items:center;justify-content:center;color:var(--color-muted)">${icon('leaf')}</div>`}
+        <div style="height:180px;overflow:hidden;border-bottom:1px solid var(--color-border);background:var(--color-ivory)">
+          <img src="${window.SIRKULA.listingImage(l)}" alt="${escapeHtml(l.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="this.onerror=null;this.src='/images/food/snacks.jpg'">
         </div>
         <div class="card-body" style="padding:0.85rem">
           <div style="display:flex;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem">
@@ -89,8 +91,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <span class="badge badge-${l.status.toLowerCase()}">${l.status}</span>
           </div>
           <h4 style="margin:0 0 0.4rem;font-size:1rem">${escapeHtml(l.title)}</h4>
-          <p style="font-size:0.85rem;color:var(--color-muted);margin-bottom:0.5rem">${escapeHtml(l.description||'')}</p>
-          <div style="font-size:0.85rem;color:var(--color-muted);margin-bottom:0.4rem">${l.quantity} ${l.unit} &bull; ${window.SIRKULA.formatDate(l.pickupDeadline)}${dist}</div>
+          <p style="font-size:0.85rem;color:var(--color-muted);margin-bottom:0.5rem">${escapeHtml(l.description || '')}</p>
+          <div style="font-size:0.85rem;color:var(--color-muted);margin-bottom:0.4rem">${l.quantity} ${l.unit} &bull; ${window.SIRKULA.formatDate(l.pickupDeadline)}</div>
           <div style="display:flex;gap:0.5rem">
             <a href="/listing-detail.html?id=${l.id}" class="btn btn-sm btn-primary flex-1">View</a>
             <a href="/marketplace.html?q=${encodeURIComponent(l.title)}" class="btn btn-sm btn-outline">Similar</a>
@@ -138,5 +140,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function escapeHtml(s) {
   if (s == null) return '';
-  return String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
+  return String(s).replace(/[&<>\"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
 }

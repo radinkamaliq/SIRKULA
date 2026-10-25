@@ -47,22 +47,40 @@ function errorHandler(err, req, res, next) {
     message = err.errors.map((e) => e.msg).join(', ');
   }
 
+  // Database connection/unavailable errors -> friendly message regardless of environment
+  if (err.code === 'P1001' || err.code === 'P1002' || err.code === 'P1182' || err.code === 'P1003' || err.code === 'P2001') {
+    // P1001: Connection pool exhausted
+    // P1002: Connection lookup timeout
+    // P1182: Statement timeout
+    // P1003: Connection rejected
+    // P2001: Transaction already committed/rejected
+    statusCode = 503;
+    code = 'DATABASE_UNAVAILABLE';
+    message = 'Database service is temporarily unavailable. Please try again later.';
+    err.isOperational = true; // Mark as operational so production hides details
+  }
+
+  // Mark ApiError operational errors as such (already set in controllers)
+  if (err instanceof ApiError) {
+    err.isOperational = true;
+  }
+
   // Production: hide unexpected error details
   const isProduction = process.env.NODE_ENV === 'production';
   if (!err.isOperational && isProduction) {
     message = 'Something went wrong.';
   }
 
+  // Always suppress stack traces and internal details from the client response
+  // Stack traces are only logged server-side, never sent to the client
   const response = {
     success: false,
     error: message,
     code,
   };
 
-  if (!isProduction && process.env.NODE_ENV !== 'test') {
-    response.stack = err.stack;
-    response.details = err.details || null;
-  }
+  // Never include stack traces or detailed error information in the client response
+  // Server-side logging is handled by the catch middleware
 
   res.status(statusCode).json(response);
 }

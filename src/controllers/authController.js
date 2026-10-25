@@ -31,28 +31,36 @@ const register = asyncHandler(async (req, res) => {
     throw new ApiError('Admin accounts cannot be created through public registration', 403, 'ADMIN_REGISTRATION_FORBIDDEN');
   }
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    throw new ApiError('Email already registered', 409, 'DUPLICATE_EMAIL');
+  try {
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      throw new ApiError('Email already registered', 409, 'DUPLICATE_EMAIL');
+    }
+  } catch (err) {
+    throw new ApiError('Unable to connect to the database. Please try again later.', 500, 'DATABASE_ERROR');
   }
 
   const saltRounds = Number(process.env.BCRYPT_SALT_ROUNDS) || 12;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
-  const user = await prisma.user.create({
-    data: { name, email, password: passwordHash, role },
-    select: { id: true, email: true, name: true, role: true, status: true, createdAt: true },
-  });
+  try {
+    const user = await prisma.user.create({
+      data: { name, email, password: passwordHash, role },
+      select: { id: true, email: true, name: true, role: true, status: true, createdAt: true },
+    });
 
-  req.session.userId = user.id;
-  req.session.user = user;
-  req.session.role = user.role;
+    req.session.userId = user.id;
+    req.session.user = user;
+    req.session.role = user.role;
 
-  res.status(201).json({
-    success: true,
-    message: 'Registration successful',
-    data: { user, role: user.role },
-  });
+    res.status(201).json({
+      success: true,
+      message: 'Registration successful',
+      data: { user, role: user.role },
+    });
+  } catch (err) {
+    throw new ApiError('Unable to create user account. Please try again later.', 500, 'DATABASE_ERROR');
+  }
 });
 
 /**
@@ -69,35 +77,43 @@ const login = asyncHandler(async (req, res) => {
 
   const { email, password } = req.body;
 
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) {
-    throw new ApiError('Invalid email or password', 401, 'INVALID_CREDENTIALS');
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      throw new ApiError('Invalid email or password', 401, 'INVALID_CREDENTIALS');
+    }
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new ApiError('Invalid email or password', 401, 'INVALID_CREDENTIALS');
+    }
+
+    if (user.status === 'SUSPENDED') {
+      throw new ApiError('Your account has been suspended. Contact support.', 403, 'ACCOUNT_SUSPENDED');
+    }
+
+    req.session.userId = user.id;
+    req.session.user = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      status: user.status,
+    };
+    req.session.role = user.role;
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      data: { user: req.session.user, role: user.role },
+    });
+  } catch (err) {
+    // Re-throw as ApiError to ensure consistent error formatting
+    if (err.statusCode) {
+      throw err;
+    }
+    throw new ApiError('Unable to connect to the database. Please try again later.', 500, 'DATABASE_ERROR');
   }
-
-  const valid = await bcrypt.compare(password, user.password);
-  if (!valid) {
-    throw new ApiError('Invalid email or password', 401, 'INVALID_CREDENTIALS');
-  }
-
-  if (user.status === 'SUSPENDED') {
-    throw new ApiError('Your account has been suspended. Contact support.', 403, 'ACCOUNT_SUSPENDED');
-  }
-
-  req.session.userId = user.id;
-  req.session.user = {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    role: user.role,
-    status: user.status,
-  };
-  req.session.role = user.role;
-
-  res.json({
-    success: true,
-    message: 'Login successful',
-    data: { user: req.session.user, role: user.role },
-  });
 });
 
 /**

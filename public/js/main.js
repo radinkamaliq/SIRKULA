@@ -1,10 +1,10 @@
-/* SIRKULA — Shared app logic: session, navigation, auth UI */
+/* SIRKULA — Shared app logic: session, navigation, auth UI (demo localStorage) */
 window.SIRKULA = window.SIRKULA || {};
 
 let currentUser = null;
 
-async function initApp() {
-  await loadSession();
+function initApp() {
+  loadSession();
   setupAuthUI();
   setupMobileDrawer();
   setupLogout();
@@ -14,8 +14,6 @@ async function initApp() {
 
 /**
  * Pages that require an authenticated session.
- * If the user is not logged in, redirect to the login page.
- * Uses auth:false so the probe itself never triggers a toast/redirect.
  */
 const PROTECTED_PAGES = [
   'dashboard.html',
@@ -35,16 +33,8 @@ function guardProtectedPages() {
   }
 }
 
-async function loadSession() {
-  try {
-    // Use auth:false so the initial session probe does NOT trigger the
-    // 401 toast/redirect — it is expected to return 401 for anonymous users.
-    const data = await window.SIRKULA.api.get('/auth/me', { auth: false });
-    // The API wraps payloads as { success, data: { user } }.
-    currentUser = data.data.user;
-  } catch (e) {
-    currentUser = null;
-  }
+function loadSession() {
+  currentUser = window.SIRKULA.auth.currentUser();
   renderAuthUI();
 }
 
@@ -75,14 +65,12 @@ function setupAuthUI() {
 
 function setupLogout() {
   document.querySelectorAll('[data-action="logout"]').forEach((btn) => {
-    btn.addEventListener('click', async (e) => {
+    btn.addEventListener('click', (e) => {
       e.preventDefault();
-      try {
-        await window.SIRKULA.api.post('/auth/logout');
-      } catch (_) {}
+      window.SIRKULA.auth.logout();
       currentUser = null;
       window.SIRKULA.toast('Logged out.', 'info');
-      window.location.href = '/index.html';
+      window.location.href = '/login.html';
     });
   });
 }
@@ -97,7 +85,6 @@ function setupMobileDrawer() {
 }
 
 function setupSearchNav() {
-  // Global search on marketplace link: if a q param exists, carry it to marketplace
   const searchInput = document.getElementById('global-search');
   if (searchInput) {
     searchInput.addEventListener('keydown', (e) => {
@@ -112,6 +99,29 @@ function setupSearchNav() {
 
 window.SIRKULA.initApp = initApp;
 window.SIRKULA.currentUser = () => currentUser;
+
+window.SIRKULA.resolveImageUrl = function (value) {
+  if (!value) return '';
+  if (/^https?:\/\//i.test(value) || String(value).startsWith('/')) return value;
+  return '/uploads/' + value;
+};
+
+window.SIRKULA.categoryImage = function (category) {
+  const map = {
+    Bakery: '/images/food/bakery.jpg',
+    Produce: '/images/food/produce.jpg',
+    'Prepared Food': '/images/food/prepared.jpg',
+    Dairy: '/images/food/dairy.jpg',
+  };
+  return map[category] || '/images/food/snacks.jpg';
+};
+
+window.SIRKULA.listingImage = function (listing) {
+  const first = listing && Array.isArray(listing.images) ? listing.images[0] : (listing ? listing.image : '');
+  if (first) return window.SIRKULA.resolveImageUrl(first);
+  if (listing && listing.category) return window.SIRKULA.categoryImage(listing.category);
+  return '/images/food/snacks.jpg';
+};
 
 // Auto-init when DOM ready
 if (document.readyState === 'loading') {

@@ -66,8 +66,16 @@ if (typeof window !== 'undefined') {
           return svg;
         });
         if (replaced !== text) {
-          const newNode = document.createTextNode(replaced);
-          node.parentNode.replaceChild(newNode, node);
+          // Parse the SVG markup into real DOM elements instead of a text node,
+          // so <svg>/<path>/<polyline>/<circle> render as icons, not raw text.
+          // The SVG source is trusted static markup (ICONS constant), not user input.
+          const temp = document.createElement('div');
+          temp.innerHTML = replaced;
+          const parent = node.parentNode;
+          while (temp.firstChild) {
+            parent.insertBefore(temp.firstChild, node);
+          }
+          parent.removeChild(node);
         }
       } else if (node.nodeType === Node.ELEMENT_NODE && node.hasChildNodes()) {
         node.childNodes.forEach(child => walkAndReplace(child));

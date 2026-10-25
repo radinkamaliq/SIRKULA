@@ -1,18 +1,16 @@
-/* SIRKULA — Notifications */
-document.addEventListener('DOMContentLoaded', async () => {
+/* SIRKULA — Notifications (demo localStorage) */
+document.addEventListener('DOMContentLoaded', () => {
   const listEl = document.getElementById('notifList');
   const countEl = document.getElementById('notifCount');
   const markAllBtn = document.getElementById('markAllRead');
+  const me = window.SIRKULA.currentUser();
+  if (!me) return;
 
-  async function load() {
-    try {
-      const d = await window.SIRKULA.api.get('/notifications');
-      const data = d.data || {};
-      countEl.textContent = `${data.unreadCount || 0} unread`;
-      render(data.items || []);
-    } catch (e) {
-      listEl.innerHTML = '<div class="empty-state"><p>Unable to load notifications.</p></div>';
-    }
+  function load() {
+    const data = window.SIRKULA.storage.getNotifications({ userId: me.id });
+    const unread = data.filter((n) => !n.read).length;
+    countEl.textContent = unread + ' unread';
+    render(data);
   }
 
   function render(items) {
@@ -23,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     items.forEach((n) => {
       const el = document.createElement('div');
-      el.className = `card ${n.read ? '' : 'unread'}`;
+      el.className = 'card ' + (n.read ? '' : 'unread');
       el.style.borderLeft = n.read ? '' : '3px solid var(--color-fresh)';
       el.innerHTML = `
         <div class="card-body" style="padding:0.9rem 1rem;cursor:pointer">
@@ -42,30 +40,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  async function markRead(id) {
-    try {
-      await window.SIRKULA.api.patch('/notifications/' + id + '/read');
-      load();
-      updateNavCount();
-    } catch (e) {}
+  function markRead(id) {
+    window.SIRKULA.storage.markNotificationRead(id);
+    load();
+    updateNavCount();
   }
 
-  async function markAll() {
-    try {
-      await window.SIRKULA.api.patch('/notifications/read-all');
-      load();
-      updateNavCount();
-      window.SIRKULA.toast('All marked as read', 'info');
-    } catch (e) { window.SIRKULA.toast(e.message || 'Failed', 'error'); }
+  function markAll() {
+    const count = window.SIRKULA.storage.markAllNotificationsRead(me.id);
+    load();
+    updateNavCount();
+    window.SIRKULA.toast(count + ' marked as read', 'info');
   }
 
-  async function updateNavCount() {
-    try {
-      const d = await window.SIRKULA.api.get('/notifications?limit=1&unreadOnly=true');
-      const c = d.data.unreadCount || 0;
-      const els = document.querySelectorAll('#nav-notif-count');
-      els.forEach((el) => el.textContent = c);
-    } catch (_) {}
+  function updateNavCount() {
+    const notifs = window.SIRKULA.storage.getNotifications({ userId: me.id, unreadOnly: true });
+    const c = notifs.length;
+    const els = document.querySelectorAll('#nav-notif-count');
+    els.forEach((el) => el.textContent = c);
   }
 
   markAllBtn.addEventListener('click', markAll);
@@ -74,5 +66,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function escapeHtml(s) {
   if (s == null) return '';
-  return String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
+  return String(s).replace(/[&<>\"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
 }

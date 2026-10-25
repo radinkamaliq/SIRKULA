@@ -1,12 +1,19 @@
-/* SIRKULA — Listing detail + reservation request */
-document.addEventListener('DOMContentLoaded', async () => {
+/* SIRKULA — Listing detail + reservation request (demo localStorage) */
+document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
-  if (!id) { document.getElementById('detailError').textContent = 'Missing listing ID.'; return; }
+  if (!id) {
+    document.getElementById('detailError').textContent = 'Missing listing ID.';
+    return;
+  }
 
   try {
-    const data = await window.SIRKULA.api.get('/listings/' + id);
-    const l = data.data;
+    const l = window.SIRKULA.storage.getListingById(id);
+    if (!l) {
+      document.getElementById('detailLoading').style.display = 'none';
+      document.getElementById('detailError').textContent = 'Listing not found.';
+      return;
+    }
     renderListing(l);
     setupReservation(l);
   } catch (e) {
@@ -30,16 +37,28 @@ function renderListing(l) {
   document.getElementById('detailUnit').textContent = l.unit;
   document.getElementById('detailPriceRow').style.display = l.price ? '' : 'none';
   document.getElementById('detailPrice').textContent = window.SIRKULA.formatCurrency(l.price);
-  document.getElementById('detailSeller').textContent = l.seller ? l.seller.name : '—';
-  document.getElementById('detailImg').src = (l.images && l.images[0]) ? '/uploads/' + l.images[0] : '';
-  document.getElementById('detailImg').alt = l.title;
+  const seller = window.SIRKULA.storage.getUserById(l.sellerId);
+  document.getElementById('detailSeller').textContent = seller ? seller.name : '—';
+  const detailImg = document.getElementById('detailImg');
+  const imgUrl = window.SIRKULA.listingImage(l);
+  detailImg.src = imgUrl;
+  detailImg.alt = l.title;
+  detailImg.onerror = () => { detailImg.onerror = null; detailImg.src = '/images/food/snacks.jpg'; };
   document.getElementById('detailAvail').textContent = 'Available: ' + (l.availableQuantity != null ? l.availableQuantity : l.quantity) + ' ' + l.unit;
   const imagesEl = document.getElementById('detailImages');
   imagesEl.innerHTML = '';
   (l.images || []).slice(1).forEach((img) => {
     const t = document.createElement('img');
-    t.src = '/uploads/' + img; t.alt = l.title; t.style.width='70px'; t.style.height='70px'; t.style.objectFit='cover'; t.style.borderRadius='var(--radius-sm)'; t.style.border='1px solid var(--color-border)';
-    t.onclick = () => { document.getElementById('detailImg').src = '/uploads/' + img; };
+    const thumbUrl = window.SIRKULA.resolveImageUrl(img);
+    t.src = thumbUrl;
+    t.alt = l.title;
+    t.style.width = '70px';
+    t.style.height = '70px';
+    t.style.objectFit = 'cover';
+    t.style.borderRadius = 'var(--radius-sm)';
+    t.style.border = '1px solid var(--color-border)';
+    t.onerror = () => { t.onerror = null; t.src = '/images/food/snacks.jpg'; };
+    t.onclick = () => { detailImg.src = thumbUrl; };
     imagesEl.appendChild(t);
   });
 
@@ -64,16 +83,36 @@ function setupReservation(l) {
 
   const max = Number(l.availableQuantity || l.quantity || 0);
   qtyInput.max = max;
-  qtyInput.placeholder = `Max ${max}`;
+  qtyInput.placeholder = 'Max ' + max;
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     msg.textContent = '';
     const qty = Number(qtyInput.value);
-    if (qty <= 0 || qty > max) { msg.textContent = 'Invalid quantity.'; return; }
+    if (qty <= 0 || qty > max) {
+      msg.textContent = 'Invalid quantity.';
+      return;
+    }
+    if (!me) {
+      msg.textContent = 'Please log in to make a reservation.';
+      return;
+    }
     window.SIRKULA.showLoading(btn, true);
     try {
-      await window.SIRKULA.api.post('/reservations', { listingId: l.id, quantity: qty, notes: form.notes.value });
+      window.SIRKULA.storage.createReservation({
+        listingId: l.id,
+        receiverId: me.id,
+        quantity: qty,
+        notes: form.notes.value,
+      });
+      // Create notification for seller
+      window.SIRKULA.storage.createNotification({
+        userId: l.sellerId,
+        title: 'Permintaan Reservasi Baru',
+        message: (me.name || me.email) + ' meminta ' + qty + ' ' + l.unit + ' "' + l.title + '".',
+        type: 'RESERVATION_REQUEST',
+        listingId: l.id,
+      });
       window.SIRKULA.toast('Reservation request sent', 'success');
       setTimeout(() => { window.location.href = '/reservations.html'; }, 700);
     } catch (err) {
