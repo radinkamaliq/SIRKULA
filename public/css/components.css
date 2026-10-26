@@ -77,6 +77,8 @@
 .icon-wrap > svg.lg { width: 24px; height: 24px; }
 .header-actions .icon-wrap > svg { width: 20px; height: 20px; }
 
+.btn-label { display: inline; color: inherit; }
+.btn:active .btn-label, .btn:focus .btn-label, .btn:focus-visible .btn-label, .btn:hover .btn-label { color: inherit; opacity: 1; visibility: visible; }
 /* Language switcher */
 .lang-switcher { position: relative; display: inline-block; }
 .lang-switcher-btn { min-width: 150px; justify-content: space-between; background: var(--color-white); color: var(--color-deep); border-color: var(--color-border); }

@@ -472,6 +472,8 @@
   }
   const originalTextNodes = new WeakMap();
   function translateTextNode(node) {
+  const parent = node.parentElement;
+    if (parent && typeof parent.closest === "function" && parent.closest("[data-i18n]")) return;
     const value = node.nodeValue;
     if (value == null) return;
     const trimmed = value.trim();
@@ -498,7 +500,7 @@
   }
   function applyTranslations(root) {
     if (!root) root = document;
-    try { root.querySelectorAll("[data-i18n]").forEach((el) => { const key = el.getAttribute("data-i18n"); if (key) { const tr = t(key); if (tr) el.textContent = tr; } }); } catch (e) {}
+    try { root.querySelectorAll("[data-i18n]").forEach((el) => { const key = el.getAttribute("data-i18n"); if (key) { const tr = t(key); if (tr) { const label = el.querySelector && el.querySelector(".btn-label"); if (label) label.textContent = tr; else el.textContent = tr; } } }); } catch (e) {}
     try { root.querySelectorAll("[data-i18n-placeholder]").forEach((el) => el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")))); } catch (e) {}
     try { root.querySelectorAll("[data-i18n-aria-label]").forEach((el) => el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria-label")))); } catch (e) {}
     try { root.querySelectorAll("[data-i18n-title]").forEach((el) => el.setAttribute("title", t(el.getAttribute("data-i18n-title")))); } catch (e) {}
