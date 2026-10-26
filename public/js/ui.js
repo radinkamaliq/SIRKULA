@@ -11,7 +11,11 @@ function toast(message, type = 'info') {
   }
   const el = document.createElement('div');
   el.className = `toast ${type}`;
-  el.innerHTML = `<span class="spin-text" style="animation:none">${message}</span>`;
+  const text = document.createElement('span');
+  text.className = 'spin-text';
+  text.style.animation = 'none';
+  text.textContent = String(message == null ? '' : message);
+  el.appendChild(text);
   container.appendChild(el);
   setTimeout(() => {
     el.style.opacity = '0';
@@ -69,6 +73,6 @@ function setBadge(status) {
     AVAILABLE: 'badge-available', RESERVED: 'badge-reserved', UNAVAILABLE: 'badge-unavailable', EXPIRED: 'badge-expired',
     PENDING: 'badge-pending', APPROVED: 'badge-approved', REJECTED: 'badge-rejected', CANCELLED: 'badge-cancelled', COMPLETED: 'badge-completed',
   };
-  return `<span class="badge ${map[status] || ''}">${(status || '').toLowerCase()}</span>`;
+  return `<span class="badge ${map[status] || ''}">${window.SIRKULA.t(status || '') || (status || '').toLowerCase()}</span>`;
 }
 window.SIRKULA.setBadge = setBadge;

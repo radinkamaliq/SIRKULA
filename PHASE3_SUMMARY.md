@@ -1,27 +1,10 @@
-Phase 3: UI Layout Fixes - Complete
+# SIRKULA — Catatan versi demo
 
-CHANGES MADE:
+- Aplikasi berjalan memakai server statis Node.js bawaan di `src/server.js`; tidak membutuhkan Express, PostgreSQL, Prisma, atau install package.
+- `public/js/storage.js` menyediakan data demo dan persistensi browser melalui `localStorage`; sesi demo berada di `sessionStorage`.
+- `public/css/listings.css` dipakai bersama oleh homepage dan marketplace untuk kartu produk/grid responsif.
+- Foto kategori berada di `public/images/food/` sehingga halaman tidak memerlukan host foto eksternal.
+- Grafik impact memakai native canvas, tanpa CDN grafik.
+- Login role-switching hanya simulasi lokal; jangan gunakan untuk data pengguna sungguhan.
 
-1. public/js/icons.js (Phase 1 - already complete)
-   - Added DOMContentLoaded event listener with walkAndReplace() function
-   - Walks all text nodes and replaces ${icon('name')} patterns with actual SVG markup
-   - This fixes the root cause: static HTML files had ${icon('name')} as literal text since Express serves without a template engine
-
-2. public/index.html (line 43)
-   - BEFORE: <div class="main" style="margin-left:0; width:100%">
-   - AFTER:  <div class="main" style="width:100%">
-   - Fixed: Removed margin-left:0 which was overriding the normal sidebar layout defined in CSS (margin-left: var(--sidebar-width))
-
-3. public/listing-detail.html (line 41)
-   - BEFORE: <div style="display:grid;grid-template-columns: 1fr 320px; gap:2rem">
-   - AFTER:  <div style="display:grid;grid-template-columns: 1fr; gap:2rem">
-   - Fixed: Made grid responsive - removed fixed 320px column that broke on smaller screens
-
-4. public/profile.html (line 36)
-   - BEFORE: <div style="display:grid;grid-template-columns: 1fr 320px; gap:2rem">
-   - AFTER:  <div style="display:grid;grid-template-columns: 1fr; gap:2rem">
-   - Fixed: Made grid responsive - same as above
-
-VERIFICATION: Codebase search confirmed no remaining instances of "grid-template-columns:1fr 320px" or "margin-left:0.*width:100%" patterns.
-
-The SVG/Icons bug is now fully resolved: all ${icon('name')} references in static HTML pages will be replaced with actual SVG markup when the page loads, thanks to the DOMContentLoaded handler in icons.js.
+Alur presentasi: `/` → Marketplace → Log in dengan role Receiver/Seller/Admin → Dashboard dan fitur terkait. Sebelum demo, jalankan `npm.cmd test`, lalu `npm.cmd run dev`.

@@ -37,7 +37,7 @@
     <div class="container">
       <div id="detailError" style="color:var(--color-danger);margin-bottom:1rem"></div>
       <div id="detailLoading" style="text-align:center;padding:2rem"><span class="spinner"></span> Loading...</div>
-      <div id="detailContent" style="display:none">
+      <div id="detailContent" class="listing-detail-layout" style="display:none">
         <div style="display:grid;grid-template-columns: 1fr; gap:2rem">
           <div>
             <img id="detailImg" src="" style="width:100%;height:300px;object-fit:cover;border-radius:var(--radius-sm);background:var(--color-ivory)">
@@ -94,6 +94,7 @@
   </div>
 </div>
 <script src="/js/icons.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/api.js"></script>
 <script src="/js/ui.js"></script>
 <script src="/js/storage.js"></script>

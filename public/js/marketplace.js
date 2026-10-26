@@ -1,144 +1,113 @@
-/* SIRKULA — Marketplace search/filter/sort/pagination (demo localStorage) */
+/* SIRKULA — Marketplace filters and local demo listings. */
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('marketSearch');
   const grid = document.getElementById('marketListings');
-  const pag = document.getElementById('marketPagination');
-  const fCategory = document.getElementById('fCategory');
-  const fCondition = document.getElementById('fCondition');
-  const fStatus = document.getElementById('fStatus');
-  const fSort = document.getElementById('fSort');
+  const pagination = document.getElementById('marketPagination');
+  const categorySelect = document.getElementById('fCategory');
+  const conditionSelect = document.getElementById('fCondition');
+  const statusSelect = document.getElementById('fStatus');
+  const sortSelect = document.getElementById('fSort');
+  if (!form || !grid || !pagination || !categorySelect || !conditionSelect || !statusSelect || !sortSelect) return;
 
-  // URL params -> form
-  const params = new URLSearchParams(location.search);
-  if (params.get('q')) form.q.value = params.get('q');
+  const params = new URLSearchParams(window.location.search);
+  const searchInput = form.querySelector('[name="q"]');
+  if (searchInput && params.get('q')) searchInput.value = params.get('q');
 
-  let state = {
-    q: params.get('q') || '',
-    category: '',
-    condition: '',
-    status: 'AVAILABLE',
-    sort: 'newest',
-    page: 1,
-    limit: 12,
+  const state = {
+    q: params.get('q') || '', category: '', condition: '', status: 'AVAILABLE', sort: 'newest', page: 1, limit: 12,
   };
 
-  // Options for filters
-  fCategory.innerHTML = '<option value="">All categories</option>';
-  fCondition.innerHTML = '<option value="">All conditions</option><option>Fresh</option><option>Near-expiry</option><option>Packaged</option><option>Frozen</option>';
-  fCondition.value = state.condition;
-  fStatus.value = state.status;
-  fSort.value = state.sort;
+  categorySelect.innerHTML = '<option value="">All categories</option>';
+  conditionSelect.innerHTML = '<option value="">All conditions</option><option value="Fresh">Fresh</option><option value="Near-expiry">Near-expiry</option><option value="Packaged">Packaged</option><option value="Frozen">Frozen</option>';
+  sortSelect.innerHTML = '<option value="newest">Newest</option><option value="deadline">Earliest deadline</option><option value="nearest">Nearest (Jakarta demo)</option>';
+  statusSelect.innerHTML = '<option value="AVAILABLE">Available</option><option value="">All statuses</option><option value="UNAVAILABLE">Unavailable</option>';
 
-  // Load categories from demo listings
-  const cats = [...new Set(window.SIRKULA.storage.getListings().map((l) => l.category))];
-  cats.forEach((cat) => {
-    const o = document.createElement('option');
-    o.value = cat;
-    o.textContent = cat;
-    fCategory.appendChild(o);
+  const allListings = window.SIRKULA.storage.getListings();
+  [...new Set(allListings.map((listing) => listing.category).filter(Boolean))].sort().forEach((category) => {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    categorySelect.appendChild(option);
   });
+  categorySelect.value = state.category;
+  conditionSelect.value = state.condition;
+  statusSelect.value = state.status;
+  sortSelect.value = state.sort;
 
-  async function load() {
-    // Filter listings from local storage
+  function distanceFromJakarta(listing) {
+    if (typeof listing.pickupLat !== 'number' || typeof listing.pickupLng !== 'number') return Number.POSITIVE_INFINITY;
+    const lat = -6.2088;
+    const lng = 106.8456;
+    const toRad = (value) => value * Math.PI / 180;
+    const dLat = toRad(listing.pickupLat - lat);
+    const dLng = toRad(listing.pickupLng - lng);
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat)) * Math.cos(toRad(listing.pickupLat)) * Math.sin(dLng / 2) ** 2;
+    return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function load() {
     let items = window.SIRKULA.storage.getListings({
       q: state.q,
       category: state.category,
-      status: state.status === '' ? undefined : state.status,
+      status: state.status || undefined,
     });
+    if (state.condition) items = items.filter((listing) => listing.condition === state.condition);
 
-    // Apply condition filter
-    if (state.condition) {
-      items = items.filter((l) => l.condition === state.condition);
-    }
-
-    // Sort
-    if (state.sort === 'newest') {
-      items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    } else if (state.sort === 'deadline') {
-      items.sort((a, b) => new Date(a.pickupDeadline) - new Date(b.pickupDeadline));
-    } else if (state.sort === 'nearest') {
-      // nearest sort - keep creation order for demo
-    }
+    if (state.sort === 'newest') items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    else if (state.sort === 'deadline') items.sort((a, b) => new Date(a.pickupDeadline) - new Date(b.pickupDeadline));
+    else if (state.sort === 'nearest') items.sort((a, b) => distanceFromJakarta(a) - distanceFromJakarta(b));
 
     const total = items.length;
-    const totalPages = Math.ceil(total / state.limit) || 1;
-    if (state.page > totalPages) state.page = totalPages;
-    if (state.page < 1) state.page = 1;
-
+    const totalPages = Math.max(1, Math.ceil(total / state.limit));
+    state.page = Math.max(1, Math.min(state.page, totalPages));
     const start = (state.page - 1) * state.limit;
-    const pageItems = items.slice(start, start + state.limit);
-
-    render(pageItems);
-    renderPagination(total, state.page, state.limit);
+    render(items.slice(start, start + state.limit), total);
+    renderPagination(totalPages);
   }
 
-  function render(listings) {
-    grid.innerHTML = '';
-    if (!listings || listings.length === 0) {
-      grid.innerHTML = '<div class="empty-state"><p>No listings match your filters.</p></div>';
+  function render(listings, total) {
+    grid.replaceChildren();
+    if (!listings.length) {
+      const empty = document.createElement('div');
+      empty.className = 'listing-empty';
+      const title = document.createElement('strong');
+      title.textContent = window.SIRKULA.t('No listings match your filters.');
+      const hint = document.createElement('p');
+      hint.textContent = window.SIRKULA.t('Try another category or clear your search to see more surplus food.');
+      empty.append(title, hint);
+      grid.appendChild(empty);
       return;
     }
-    listings.forEach((l) => {
-      const card = document.createElement('div');
-      card.className = 'card listing-card';
-      card.innerHTML = `
-        <div style="height:180px;overflow:hidden;border-bottom:1px solid var(--color-border);background:var(--color-ivory)">
-          <img src="${window.SIRKULA.listingImage(l)}" alt="${escapeHtml(l.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="this.onerror=null;this.src='/images/food/snacks.jpg'">
-        </div>
-        <div class="card-body" style="padding:0.85rem">
-          <div style="display:flex;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem">
-            <span class="badge badge-available">${l.category}</span>
-            <span class="badge badge-${l.status.toLowerCase()}">${l.status}</span>
-          </div>
-          <h4 style="margin:0 0 0.4rem;font-size:1rem">${escapeHtml(l.title)}</h4>
-          <p style="font-size:0.85rem;color:var(--color-muted);margin-bottom:0.5rem">${escapeHtml(l.description || '')}</p>
-          <div style="font-size:0.85rem;color:var(--color-muted);margin-bottom:0.4rem">${l.quantity} ${l.unit} &bull; ${window.SIRKULA.formatDate(l.pickupDeadline)}</div>
-          <div style="display:flex;gap:0.5rem">
-            <a href="/listing-detail.html?id=${l.id}" class="btn btn-sm btn-primary flex-1">View</a>
-            <a href="/marketplace.html?q=${encodeURIComponent(l.title)}" class="btn btn-sm btn-outline">Similar</a>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
+    listings.forEach((listing) => grid.appendChild(window.SIRKULA.createListingCard(listing)));
+    grid.setAttribute('aria-label', `${total} ${window.SIRKULA.t('surplus food listings')}`);
   }
 
-  function renderPagination(total, page, limit) {
-    const totalPages = Math.ceil(total / limit) || 1;
-    pag.innerHTML = '';
+  function renderPagination(totalPages) {
+    pagination.replaceChildren();
     if (totalPages <= 1) return;
-    const pageLink = (p, label) => `<a href="#" data-page="${p}">${label}</a>`;
-    let html = '';
-    if (page > 1) html += pageLink(page - 1, 'Prev');
-    for (let p = Math.max(1, page - 2); p <= Math.min(totalPages, page + 2); p++) {
-      html += p === page ? `<span class="current">${p}</span>` : pageLink(p, p);
-    }
-    if (page < totalPages) html += pageLink(page + 1, 'Next');
-    pag.innerHTML = html;
-    pag.querySelectorAll('a').forEach((a) => {
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        state.page = Number(a.dataset.page);
-        load();
-      });
-    });
+    const addPage = (page, label, current = false) => {
+      if (current) {
+        const span = document.createElement('span');
+        span.className = 'current'; span.textContent = label; span.setAttribute('aria-current', 'page');
+        pagination.appendChild(span);
+      } else {
+        const link = document.createElement('a');
+        link.href = '#'; link.dataset.page = String(page); link.textContent = label;
+        link.addEventListener('click', (event) => { event.preventDefault(); state.page = page; load(); });
+        pagination.appendChild(link);
+      }
+    };
+    if (state.page > 1) addPage(state.page - 1, window.SIRKULA.t('Prev'));
+    for (let page = Math.max(1, state.page - 2); page <= Math.min(totalPages, state.page + 2); page += 1) addPage(page, String(page), page === state.page);
+    if (state.page < totalPages) addPage(state.page + 1, window.SIRKULA.t('Next'));
   }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    state.q = form.q.value.trim();
-    state.page = 1;
-    load();
+  form.addEventListener('submit', (event) => {
+    event.preventDefault(); state.q = searchInput ? searchInput.value.trim() : ''; state.page = 1; load();
   });
-  fCategory.addEventListener('change', (e) => { state.category = e.target.value; state.page = 1; load(); });
-  fCondition.addEventListener('change', (e) => { state.condition = e.target.value; state.page = 1; load(); });
-  fStatus.addEventListener('change', (e) => { state.status = e.target.value; state.page = 1; load(); });
-  fSort.addEventListener('change', (e) => { state.sort = e.target.value; state.page = 1; load(); });
-
+  categorySelect.addEventListener('change', () => { state.category = categorySelect.value; state.page = 1; load(); });
+  conditionSelect.addEventListener('change', () => { state.condition = conditionSelect.value; state.page = 1; load(); });
+  statusSelect.addEventListener('change', () => { state.status = statusSelect.value; state.page = 1; load(); });
+  sortSelect.addEventListener('change', () => { state.sort = sortSelect.value; state.page = 1; load(); });
   load();
 });
-
-function escapeHtml(s) {
-  if (s == null) return '';
-  return String(s).replace(/[&<>\"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
-}

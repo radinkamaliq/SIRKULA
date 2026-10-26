@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function load() {
     const data = window.SIRKULA.storage.getNotifications({ userId: me.id });
     const unread = data.filter((n) => !n.read).length;
-    countEl.textContent = unread + ' unread';
+    countEl.textContent = unread + ' ' + window.SIRKULA.t('unread');
     render(data);
   }
 
   function render(items) {
     listEl.innerHTML = '';
     if (!items.length) {
-      listEl.innerHTML = '<div class="empty-state"><p>No notifications yet.</p></div>';
+      listEl.innerHTML = '<div class="empty-state"><p>' + window.SIRKULA.t('No notifications yet.') + '</p></div>';
       return;
     }
     items.forEach((n) => {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div style="font-size:0.85rem;color:var(--color-muted)">${escapeHtml(n.message)}</div>
               <div style="font-size:0.78rem;color:var(--color-muted);margin-top:0.35rem">${window.SIRKULA.formatDateTime(n.createdAt)}</div>
             </div>
-            <span class="badge badge-${n.type.toLowerCase().replace(/_/g,'-')}">${n.type}</span>
+            <span class="badge badge-${escapeHtml(String(n.type || 'SYSTEM').toLowerCase().replace(/[^a-z0-9_-]/g, '').replace(/_/g,'-'))}">${escapeHtml(formatNotificationType(n.type))}</span>
           </div>
         </div>
       `;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const count = window.SIRKULA.storage.markAllNotificationsRead(me.id);
     load();
     updateNavCount();
-    window.SIRKULA.toast(count + ' marked as read', 'info');
+    window.SIRKULA.toast(count + ' ' + window.SIRKULA.t('marked as read'), 'info');
   }
 
   function updateNavCount() {
@@ -67,4 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function escapeHtml(s) {
   if (s == null) return '';
   return String(s).replace(/[&<>\"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
+}
+function formatNotificationType(type) {
+  const labels = {
+    RESERVATION_REQUEST: window.SIRKULA.t('Reservation Request'),
+    RESERVATION_UPDATE: window.SIRKULA.t('Reservation Update'),
+    RESERVATION_APPROVED: window.SIRKULA.t('Reservation Approved'),
+    RESERVATION_REJECTED: window.SIRKULA.t('Reservation Rejected'),
+    SYSTEM: window.SIRKULA.t('System'),
+  };
+  return labels[type] || String(type || 'System').toLowerCase().split(/[_-]+/).map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }

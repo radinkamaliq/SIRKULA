@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -7,11 +7,12 @@
 <link rel="stylesheet" href="/css/variables.css">
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/listings.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/landing.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><path fill=%22%23173F35%22 d=%22M12 2L2 7l10 5 10-5-10-5z%22/></svg>">
 </head>
-<body>
+<body class="page-home">
 <div class="layout">
   <header class="header">
     <a href="/index.html" class="brand" aria-label="SIRKULA home">
@@ -27,38 +28,35 @@
     </div>
   </header>
 
-  <aside class="sidebar" id="sidebar" data-role="SELLER,ADMIN" style="display:none">
-    <div class="sidebar-header">SIRKULA</div>
-    <nav>
-      <a href="/dashboard.html" class="sidebar-item active"><span class="icon-wrap">${icon('home')}</span>Dashboard</a>
-      <a href="/marketplace.html" class="sidebar-item"><span class="icon-wrap">${icon('home')}</span>Marketplace</a>
-      <a href="/seller-inventory.html" class="sidebar-item" data-role="SELLER"><span class="icon-wrap">${icon('layout')}</span>Inventory</a>
-      <a href="/create-listing.html" class="sidebar-item" data-role="SELLER"><span class="icon-wrap">${icon('plus')}</span>New Listing</a>
-      <a href="/reservations.html" class="sidebar-item"><span class="icon-wrap">${icon('clock')}</span>Reservations</a>
-      <a href="/notifications.html" class="sidebar-item"><span class="icon-wrap">${icon('bell')}</span>Notifications</a>
-      <a href="/profile.html" class="sidebar-item"><span class="icon-wrap">${icon('user')}</span>Profile</a>
-    </nav>
-  </aside>
 
-  <div class="main" style="margin-left:0; width:100%">
+
+  <main class="main main--full">
     <!-- Hero -->
     <section class="hero">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content">
-            <span class="hero-kicker">Food Security &bull; S-Tech 2026</span>
-            <h1>Good Food Deserves Another Chance.</h1>
-            <p class="hero-lead">Every day, tonnes of safe surplus food go to waste while families go hungry. SIRKULA connects sellers with surplus food to communities that need it—rescuing good food before it becomes waste.</p>
+            <span class="hero-kicker">FOOD RESCUE · CIRCULAR ECONOMY</span>
+            <h1>Good Food. Second Chance.</h1>
+            <p class="hero-lead">SIRKULA connects surplus food with people who can use it, before good food becomes waste.</p>
             <div class="hero-cta">
-              <a href="/marketplace.html" class="btn btn-primary btn-block">Explore Surplus Food</a>
-              <a href="/register.html" class="btn btn-outline btn-block">Join SIRKULA</a>
+              <a href="/marketplace.html" class="btn btn-primary">Explore Food</a>
+              <a href="#how-it-works" class="btn btn-outline">How SIRKULA Works</a>
             </div>
           </div>
           <div class="hero-visual">
-            <div class="visual-card">
-              <div class="icon-wrap" style="background:var(--color-lime);color:var(--color-deep)">${icon('leaf')}</div>
-              <h3>Surplus Food Redistribution</h3>
-              <p>List, discover, and rescue safe surplus food with transparent pickup workflows.</p>
+            <div class="hero-photo-frame">
+              <img class="hero-photo" src="/images/food/prepared.jpg" alt="Roti dan makanan segar yang masih layak dinikmati" fetchpriority="high">
+              <div class="hero-photo-shade"></div>
+              <div class="hero-photo-caption">
+                <span class="hero-photo-eyebrow">GOOD FOOD, SECOND CHANCE</span>
+                <h2>Rescue more. Waste less.</h2>
+                <p>Turn surplus into a useful next meal.</p>
+              </div>
+              <div class="hero-floating-card">
+                <span class="hero-floating-icon" aria-hidden="true">✓</span>
+                <span><strong>One simple loop</strong><small>List · Reserve · Pick up</small></span>
+              </div>
             </div>
           </div>
         </div>
@@ -66,7 +64,7 @@
     </section>
 
     <!-- How it works -->
-    <section class="section how-it-works">
+    <section class="section how-it-works" id="how-it-works">
       <div class="container">
         <h2>How SIRKULA works</h2>
         <p class="section-sub">Three steps to rescue surplus food.</p>
@@ -78,7 +76,7 @@
       </div>
     </section>
 
-    <!-- Featured listings (from database) -->
+    <!-- Featured listings (local demo data) -->
     <section class="section featured">
       <div class="container">
         <h2>Featured Surplus Food</h2>
@@ -92,9 +90,9 @@
     <section class="section impact" style="background:var(--color-deep);color:var(--color-white)">
       <div class="container">
         <h2 style="color:var(--color-white)">Community Impact</h2>
-        <p class="section-sub" style="color:rgba(255,255,255,0.8)">Figures computed from platform activity. Demo data clearly labeled.</p>
+        <p class="section-sub" style="color:rgba(255,255,255,0.8)">Figures reflect recorded platform activity.</p>
         <div id="impact-stats" class="stats-grid"></div>
-        <p class="section-sub" style="margin-top:1.5rem;opacity:0.8">Data source: SIRKULA platform database. "Sample" figures reflect demo data, not verified real-world results.</p>
+        <p class="section-sub" style="margin-top:1.5rem;opacity:0.8">Impact figures are estimates based on platform activity.</p>
       </div>
     </section>
 
@@ -106,9 +104,9 @@
             <h3>The food redistribution process</h3>
             <ol style="padding-left:1.2rem">
               <li>Seller lists surplus food with condition &amp; pickup deadline.</li>
-              <li>Listing auto-flags as expired after the deadline passes.</li>
+              <li>Pickup deadlines help users prioritize listings that need attention.</li>
               <li>Receiver requests an available quantity.</li>
-              <li>Seller approves or rejects; inventory reserved transactionally.</li>
+              <li>Seller approves or rejects; the demo updates available stock locally.</li>
               <li>Receiver picks up; seller marks completion.</li>
             </ol>
           </div>
@@ -140,10 +138,10 @@
             <p>S-Tech 2026 &bull; Web Development</p>
           </div>
         </div>
-        <div class="footer-note">SIRKULA demo platform. Sample data clearly labeled; no unverified real-world impact claimed.</div>
+        <div class="footer-note">SIRKULA — Rescue Food. Rethink Waste.</div>
       </div>
     </footer>
-  </div>
+  </main>
 
   <div class="mobile-drawer" id="mobile-drawer">
     <div class="mobile-drawer-header">
@@ -166,6 +164,7 @@
 </div>
 
 <script src="/js/icons.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/api.js"></script>
 <script src="/js/ui.js"></script>
 <script src="/js/storage.js"></script>

@@ -80,14 +80,14 @@ function loadReports() {
 window.SIRKULA = window.SIRKULA || {};
 window.SIRKULA.toggleUser = function (id, current, name) {
   const next = current === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
-  if (!confirm((next === 'SUSPENDED' ? 'Suspend' : 'Reactivate') + ' "' + escapeHtml(name) + '"?')) return;
+  if (!confirm((next === 'SUSPENDED' ? window.SIRKULA.t('Suspend') : window.SIRKULA.t('Reactivate')) + ' "' + escapeHtml(name) + '"?')) return;
   try {
     const updated = window.SIRKULA.storage.updateUser(id, { status: next });
     if (updated) {
-      window.SIRKULA.toast('User ' + next.toLowerCase(), 'success');
+      window.SIRKULA.toast(window.SIRKULA.t('User') + ' ' + window.SIRKULA.t(next), 'success');
       loadUsers();
     } else {
-      window.SIRKULA.toast('Failed', 'error');
+      window.SIRKULA.toast(window.SIRKULA.t('Failed'), 'error');
     }
   } catch (e) { window.SIRKULA.toast(e.message || 'Failed', 'error'); }
 };
@@ -96,7 +96,7 @@ window.SIRKULA.moderateListing = function (id, status) {
   try {
     const updated = window.SIRKULA.storage.updateListing(id, { status: status });
     if (updated) {
-      window.SIRKULA.toast('Listing updated', 'success');
+      window.SIRKULA.toast(window.SIRKULA.t('Listing updated'), 'success');
       loadListings();
     } else {
       window.SIRKULA.toast('Failed', 'error');
@@ -108,7 +108,7 @@ window.SIRKULA.updateReport = function (id, status) {
   try {
     const updated = window.SIRKULA.storage.updateReport(id, { status: status });
     if (updated) {
-      window.SIRKULA.toast('Report updated', 'success');
+      window.SIRKULA.toast(window.SIRKULA.t('Report updated'), 'success');
       loadReports();
     } else {
       window.SIRKULA.toast('Failed', 'error');

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="/css/components.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/dashboard.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -35,13 +34,21 @@
   <div class="main">
     <div class="container">
       <h1>Impact Dashboard</h1>
-      <p style="color:var(--color-muted);margin-bottom:1rem">All figures come from real aggregated database data. Demo data is clearly labeled.</p>
-      <div class="stats-grid" id="impactStats"></div>
-      <div style="display:grid;grid-template-columns: 1fr 1fr; gap:1.5rem;margin-top:1.5rem">
-        <div class="card" style="height:100%"><div class="card-header"><h3>Distribution Trend (30 days)</h3></div><div class="card-body" style="height:300px"><canvas id="trendChart"></canvas></div></div>
-        <div class="card" style="height:100%"><div class="card-header"><h3>Distribution by Category</h3></div><div class="card-body" style="height:300px"><canvas id="categoryChart"></canvas></div></div>
+      <p style="color:var(--color-muted);margin-bottom:1rem">Figures reflect recorded platform activity.</p>
+      <div class="stats-grid impact-stats-grid" id="impactStats"></div>
+      <div class="impact-charts">
+        <section class="card impact-chart-card">
+          <div class="card-header"><h3>Completed Pickups · Last 14 Days</h3></div>
+          <div class="card-body impact-chart-body"><canvas id="trendChart" role="img" aria-label="Chart jumlah pickup selesai selama 14 hari terakhir"></canvas></div>
+          <p class="chart-footnote">Completed reservations recorded on the platform.</p>
+        </section>
+        <section class="card impact-chart-card">
+          <div class="card-header"><h3>Listings by Category</h3></div>
+          <div class="card-body impact-chart-body"><canvas id="categoryChart" role="img" aria-label="Chart jumlah listing per kategori"></canvas><div id="categoryLegend" class="chart-legend"></div></div>
+          <p class="chart-footnote">Jumlah listing demo berdasarkan kategori, bukan berat makanan.</p>
+        </section>
       </div>
-      <p style="font-size:0.85rem;color:var(--color-muted);margin-top:1rem">Estimates of waste avoided are based on distributed quantity and labeled as estimates; they are not verified real-world impact.</p>
+      <p style="font-size:0.85rem;color:var(--color-muted);margin-top:1rem">Data impact dapat berubah saat kamu mencoba fitur demo. Tidak ada data yang dikirim ke server atau dibagikan antarperangkat.</p>
     </div>
   </div>
   <div class="mobile-drawer" id="mobile-drawer">
@@ -56,6 +63,7 @@
   </div>
 </div>
 <script src="/js/icons.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/api.js"></script>
 <script src="/js/ui.js"></script>
 <script src="/js/storage.js"></script>

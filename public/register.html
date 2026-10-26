@@ -15,7 +15,7 @@
   <div class="auth-card">
     <div class="brand" style="justify-content:center;margin-bottom:1.5rem"><span class="brand-mark">S</span> <strong>SIRKULA</strong></div>
     <h2>Create an account</h2>
-    <p style="color:var(--color-muted);margin-bottom:1.5rem">Join as a food seller or a receiver.</p>
+    <p style="color:var(--color-muted);margin-bottom:1.5rem">Create a local demo profile to explore SIRKULA.</p>
     <form id="registerForm" novalidate>
       <div class="field">
         <label>Full name</label>
@@ -30,7 +30,7 @@
       <div class="field">
         <label>Password</label>
         <input type="password" name="password" placeholder="••••••••" required>
-        <div class="helper">At least 8 characters, one uppercase, one lowercase, one number.</div>
+        <div class="helper">For this demo, enter any password you like. It is not saved or verified.</div>
         <div class="error-text" id="passErr"></div>
       </div>
       <div class="field">
@@ -40,7 +40,7 @@
           <option value="SELLER">Seller (list surplus food)</option>
           <option value="RECEIVER">Receiver (request food)</option>
         </select>
-        <div class="helper">Admin accounts cannot be created through public registration.</div>
+        <div class="helper">Admin access is available from the demo Login page.</div>
         <div class="error-text" id="roleErr"></div>
       </div>
       <button type="submit" id="registerBtn" class="btn btn-primary btn-block">Create account</button>
@@ -48,7 +48,8 @@
     <p style="margin-top:1.25rem;font-size:0.9rem;color:var(--color-muted);text-align:center">
       Already have an account? <a href="/login.html">Log in</a>
     </p>
-    <div id="formMsg" style="margin-top:1rem"></div>
+    <div id="formMsg" class="form-message" role="status" aria-live="polite"></div>
+    <p class="demo-note">Demo only • Profile data is stored in this browser.</p>
   </div>
 </div>
 <script src="/js/api.js"></script>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
-<div class="layout">
+<div class="layout create-listing-page">
   <header class="header">
     <a href="/dashboard.html" class="brand">${icon('plus')} <span style="margin-left:0.4rem">New Listing</span></a>
     <div class="header-actions">
@@ -34,79 +34,88 @@
   </aside>
   <div class="main">
     <div class="container">
-      <h1>Create Listing</h1>
-      <p style="color:var(--color-muted);margin-bottom:1rem">List safe surplus food for redistribution.</p>
-      <div id="formMsg" style="margin-bottom:1rem"></div>
-      <form id="listingForm" novalidate>
-        <div class="field">
-          <label>Food name <span style="color:var(--color-danger)">*</span></label>
-          <input type="text" name="title" placeholder="e.g. Fresh baguettes" required>
-          <div class="error-text" id="tErr"></div>
-        </div>
-        <div class="field">
-          <label>Description</label>
-          <textarea name="description" rows="3" placeholder="Describe the food and condition"></textarea>
-          <div class="error-text" id="dErr"></div>
-        </div>
-        <div class="field">
-          <label>Category <span style="color:var(--color-danger)">*</span></label>
-          <select name="category" required>
-            <option value="">Select</option>
-            <option>Bakery</option><option>Produce</option><option>Prepared Food</option><option>Dairy</option><option>Pantry</option><option>Beverages</option><option>Meat</option><option>Other</option>
-          </select>
-          <div class="error-text" id="cErr"></div>
-        </div>
-        <div class="field">
-          <label>Quantity <span style="color:var(--color-danger)">*</span></label>
-          <input type="number" name="quantity" min="0" step="0.0001" required placeholder="0">
-          <div class="error-text" id="qErr"></div>
-        </div>
-        <div class="field">
-          <label>Unit <span style="color:var(--color-danger)">*</span></label>
-          <select name="unit" required>
-            <option value="">Select</option><option>pieces</option><option>kg</option><option>liter</option><option>packs</option><option>cans</option><option>bags</option><option>boxes</option>
-          </select>
-          <div class="error-text" id="uErr"></div>
-        </div>
-        <div class="field">
-          <label>Condition <span style="color:var(--color-danger)">*</span></label>
-          <select name="condition" required>
-            <option value="">Select</option><option>Fresh</option><option>Near-expiry</option><option>Packaged</option><option>Frozen</option>
-          </select>
-          <div class="helper">Never claim a listing is certified safe without verification.</div>
-          <div class="error-text" id="condErr"></div>
-        </div>
-        <div class="field">
-          <label>Price (optional; leave blank for free)</label>
-          <input type="number" name="price" min="0" step="0.01" placeholder="0">
-          <div class="error-text" id="pErr"></div>
-        </div>
-        <div class="field">
-          <label>Pickup location <span style="color:var(--color-danger)">*</span></label>
-          <input type="text" name="pickupLocation" placeholder="e.g. Front counter, Jl. Merdeka No. 10" required>
-          <div class="helper">Do not expose private home addresses unnecessarily.</div>
-          <div class="error-text" id="plErr"></div>
-        </div>
-        <div class="field">
-          <label>Latitude (optional)</label>
-          <input type="number" name="pickupLat" step="any" placeholder="-7.2575">
-        </div>
-        <div class="field">
-          <label>Longitude (optional)</label>
-          <input type="number" name="pickupLng" step="any" placeholder="112.7521">
-        </div>
-        <div class="field">
-          <label>Pickup deadline <span style="color:var(--color-danger)">*</span></label>
-          <input type="datetime-local" name="pickupDeadline" required>
-          <div class="error-text" id="pdErr"></div>
-        </div>
-        <div class="field">
-          <label>Photo (optional)</label>
-          <input type="file" name="image" accept="image/*">
-          <div class="helper">JPG, PNG, WEBP, GIF up to 5 MB.</div>
-        </div>
-        <button type="submit" id="createBtn" class="btn btn-primary btn-block">Create listing</button>
-      </form>
+      <header class="page-header">
+        <h1 id="createListingTitle">Create Listing</h1>
+        <p class="subtitle">List safe surplus food for redistribution.</p>
+      </header>
+      <div id="formMsg" class="form-message" role="status" aria-live="polite"></div>
+      <section class="form-card">
+        <form id="listingForm" class="listing-form" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label>Food name <span style="color:var(--color-danger)">*</span></label>
+              <input type="text" name="title" placeholder="e.g. Fresh baguettes" required>
+              <div class="error-text" id="tErr"></div>
+            </div>
+            <div class="field">
+              <label>Category <span style="color:var(--color-danger)">*</span></label>
+              <select name="category" required>
+                <option value="">Select</option>
+                <option>Bakery</option><option>Produce</option><option>Prepared Food</option><option>Dairy</option><option>Pantry</option><option>Beverages</option><option>Meat</option><option>Other</option>
+              </select>
+              <div class="error-text" id="cErr"></div>
+            </div>
+            <div class="field field--full">
+              <label>Description</label>
+              <textarea name="description" rows="4" placeholder="Describe the food and condition"></textarea>
+              <div class="error-text" id="dErr"></div>
+            </div>
+            <div class="field">
+              <label>Quantity <span style="color:var(--color-danger)">*</span></label>
+              <input type="number" name="quantity" min="0" step="0.0001" required placeholder="0">
+              <div class="error-text" id="qErr"></div>
+            </div>
+            <div class="field">
+              <label>Unit <span style="color:var(--color-danger)">*</span></label>
+              <select name="unit" required>
+                <option value="">Select</option><option>pieces</option><option>kg</option><option>liter</option><option>packs</option><option>cans</option><option>bags</option><option>boxes</option>
+              </select>
+              <div class="error-text" id="uErr"></div>
+            </div>
+            <div class="field">
+              <label>Condition <span style="color:var(--color-danger)">*</span></label>
+              <select name="condition" required>
+                <option value="">Select</option><option>Fresh</option><option>Near-expiry</option><option>Packaged</option><option>Frozen</option>
+              </select>
+              <div class="helper">Never claim a listing is certified safe without verification.</div>
+              <div class="error-text" id="condErr"></div>
+            </div>
+            <div class="field">
+              <label>Price (optional; leave blank for free)</label>
+              <input type="number" name="price" min="0" step="0.01" placeholder="0">
+              <div class="error-text" id="pErr"></div>
+            </div>
+            <div class="field">
+              <label>Pickup location <span style="color:var(--color-danger)">*</span></label>
+              <input type="text" name="pickupLocation" placeholder="e.g. Front counter, Jl. Merdeka No. 10" required>
+              <div class="helper">Do not expose private home addresses unnecessarily.</div>
+              <div class="error-text" id="plErr"></div>
+            </div>
+            <div class="field">
+              <label>Pickup deadline <span style="color:var(--color-danger)">*</span></label>
+              <input type="datetime-local" name="pickupDeadline" required>
+              <div class="error-text" id="pdErr"></div>
+            </div>
+            <div class="field">
+              <label>Latitude (optional)</label>
+              <input type="number" name="pickupLat" step="any" placeholder="-7.2575">
+            </div>
+            <div class="field">
+              <label>Longitude (optional)</label>
+              <input type="number" name="pickupLng" step="any" placeholder="112.7521">
+            </div>
+            <div class="field field--full">
+              <label>Photo (optional)</label>
+              <input type="file" name="image" accept="image/*">
+              <div class="helper">Choose a JPG, PNG, or WEBP image up to 5 MB. It will be resized and stored with your listing.</div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" id="createBtn" class="btn btn-primary">Create Listing</button>
+              <a href="/seller-inventory.html" class="btn btn-secondary">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </section>
     </div>
   </div>
   <div class="mobile-drawer" id="mobile-drawer">
@@ -120,6 +129,7 @@
   </div>
 </div>
 <script src="/js/icons.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/api.js"></script>
 <script src="/js/ui.js"></script>
 <script src="/js/storage.js"></script>

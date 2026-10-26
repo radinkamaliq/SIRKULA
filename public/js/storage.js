@@ -14,11 +14,559 @@
   ];
 
   const DEMO_LISTINGS = [
-    { id: 'listing_demo_001', title: 'Roti Tantan Segar', description: 'Sisa roti panggan dari pembukaan pagi.', category: 'Bakery', quantity: 25, availableQuantity: 20, unit: 'pieces', condition: 'Fresh', price: 15000, currency: 'IDR', sellerId: 'user_demo_seller_001', pickupLocation: 'Depan toko, Jl. Melati No. 10, Jakarta Pusat', pickupLat: -6.2088, pickupLng: 106.8456, pickupDeadline: new Date(Date.now() + 86400000 * 2).toISOString(), images: ['/images/food/bakery.jpg'], status: 'AVAILABLE', createdAt: new Date(Date.now() - 86400000 * 5).toISOString(), updatedAt: new Date(Date.now() - 86400000 * 5).toISOString() },
-    { id: 'listing_demo_002', title: 'Buah-organisasi Segar', description: 'Potongan buah segar dari pasar.', category: 'Produce', quantity: 12, availableQuantity: 8, unit: 'kg', condition: 'Near-expiry', price: 25000, currency: 'IDR', sellerId: 'user_demo_seller_001', pickupLocation: 'Gudang belakang, Jl. Melati No. 10, Jakarta Pusat', pickupLat: -6.2088, pickupLng: 106.8456, pickupDeadline: new Date(Date.now() + 86400000 * 1).toISOString(), images: ['/images/food/produce.jpg'], status: 'AVAILABLE', createdAt: new Date(Date.now() - 86400000 * 3).toISOString(), updatedAt: new Date(Date.now() - 86400000 * 3).toISOString() },
-    { id: 'listing_demo_003', title: 'Makanan Siap Pakai Bekas Catering', description: 'Makanan siap saji dari event corporate.', category: 'Prepared Food', quantity: 30, availableQuantity: 30, unit: 'packs', condition: 'Packaged', price: null, currency: 'IDR', sellerId: 'user_demo_seller_001', pickupLocation: 'Loket utama, Gedung Office Park, Sudirman', pickupLat: -6.2115, pickupLng: 106.8052, pickupDeadline: new Date(Date.now() + 86400000 * 0.5).toISOString(), images: ['/images/food/prepared.jpg'], status: 'AVAILABLE', createdAt: new Date(Date.now() - 86400000 * 1).toISOString(), updatedAt: new Date(Date.now() - 86400000 * 1).toISOString() },
-    { id: 'listing_demo_004', title: 'Susu UHT Dekat Expired', description: 'Karton susu UHT dengan tanggal kadaluarsa mendekat.', category: 'Dairy', quantity: 50, availableQuantity: 45, unit: 'boxes', condition: 'Near-expiry', price: 12000, currency: 'IDR', sellerId: 'user_demo_seller_001', pickupLocation: 'Tempat pengiriman, Jl. Sudirman Kav 50', pickupLat: -6.2115, pickupLng: 106.8052, pickupDeadline: new Date(Date.now() + 86400000 * 3).toISOString(), images: ['/images/food/dairy.jpg'], status: 'UNAVAILABLE', createdAt: new Date(Date.now() - 86400000 * 10).toISOString(), updatedAt: new Date(Date.now() - 86400000 * 10).toISOString() },
-  ];
+  {
+    "id": "listing_demo_001",
+    "title": "Paket Roti & Pastri Segar",
+    "description": "Pilihan roti dan pastri yang masih layak dinikmati dari etalase pagi.",
+    "category": "Bakery",
+    "quantity": 25,
+    "availableQuantity": 20,
+    "unit": "pieces",
+    "condition": "Fresh",
+    "price": 15000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Depan toko, Jl. Melati No. 10, Jakarta Pusat",
+    "pickupLat": -6.2088,
+    "pickupLng": 106.8456,
+    "pickupDeadline": "2026-10-27T14:08:31.011Z",
+    "images": [
+      "/images/food/bakery.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-20T14:08:31.011Z",
+    "updatedAt": "2026-10-20T14:08:31.011Z"
+  },
+  {
+    "id": "listing_demo_002",
+    "title": "Paket Buah Segar",
+    "description": "Buah segar pilihan dari stok pasar hari ini.",
+    "category": "Produce",
+    "quantity": 12,
+    "availableQuantity": 8,
+    "unit": "kg",
+    "condition": "Near-expiry",
+    "price": 25000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Gudang belakang, Jl. Melati No. 10, Jakarta Pusat",
+    "pickupLat": -6.2088,
+    "pickupLng": 106.8456,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/mixed-fruit.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-22T14:08:31.013Z",
+    "updatedAt": "2026-10-22T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_003",
+    "title": "Paket Hidangan Catering",
+    "description": "Hidangan siap santap berlebih dari acara yang selesai.",
+    "category": "Prepared Food",
+    "quantity": 30,
+    "availableQuantity": 30,
+    "unit": "packs",
+    "condition": "Packaged",
+    "price": null,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Loket utama, Gedung Office Park, Sudirman",
+    "pickupLat": -6.2115,
+    "pickupLng": 106.8052,
+    "pickupDeadline": "2026-10-26T02:08:31.013Z",
+    "images": [
+      "/images/food/prepared.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-24T14:08:31.013Z",
+    "updatedAt": "2026-10-24T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_004",
+    "title": "Paket Susu UHT",
+    "description": "Susu UHT kemasan utuh dengan tanggal terbaik yang perlu segera diperhatikan.",
+    "category": "Dairy",
+    "quantity": 50,
+    "availableQuantity": 45,
+    "unit": "boxes",
+    "condition": "Near-expiry",
+    "price": 12000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Tempat pengiriman, Jl. Sudirman Kav 50",
+    "pickupLat": -6.2115,
+    "pickupLng": 106.8052,
+    "pickupDeadline": "2026-10-28T14:08:31.013Z",
+    "images": [
+      "/images/food/milk.jpg"
+    ],
+    "status": "UNAVAILABLE",
+    "createdAt": "2026-10-15T14:08:31.013Z",
+    "updatedAt": "2026-10-15T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_005",
+    "title": "Paket Croissant & Danish",
+    "description": "Croissant dan danish segar sisa produksi pagi, masih renyah.",
+    "category": "Bakery",
+    "quantity": 18,
+    "availableQuantity": 14,
+    "unit": "pieces",
+    "condition": "Fresh",
+    "price": 20000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Bakery Corner, Jl. Sabang No. 12, Jakarta Pusat",
+    "pickupLat": -6.185,
+    "pickupLng": 106.83,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/croissants.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-23T14:08:31.013Z",
+    "updatedAt": "2026-10-23T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_006",
+    "title": "Roti Tawar Premium",
+    "description": "Roti tawar kemasan dengan tanggal terbaik yang perlu segera diperhatikan.",
+    "category": "Bakery",
+    "quantity": 10,
+    "availableQuantity": 10,
+    "unit": "loaves",
+    "condition": "Near-expiry",
+    "price": 18000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Toko Roti Melati, Jl. Melati No. 10, Jakarta Pusat",
+    "pickupLat": -6.2088,
+    "pickupLng": 106.8456,
+    "pickupDeadline": "2026-10-27T14:08:31.013Z",
+    "images": [
+      "/images/food/bread.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-21T14:08:31.013Z",
+    "updatedAt": "2026-10-21T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_007",
+    "title": "Sayur Hijau Organik",
+    "description": "Sayuran hijau organik segar dari kebun lokal.",
+    "category": "Produce",
+    "quantity": 8,
+    "availableQuantity": 5,
+    "unit": "kg",
+    "condition": "Fresh",
+    "price": 30000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Pasar Segar, Jl. Barito No. 8, Jakarta Selatan",
+    "pickupLat": -6.26,
+    "pickupLng": 106.8,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/greens.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-23T14:08:31.013Z",
+    "updatedAt": "2026-10-23T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_008",
+    "title": "Buah Campur Potong",
+    "description": "Campuran buah potong segar dalam kemasan higienis.",
+    "category": "Produce",
+    "quantity": 6,
+    "availableQuantity": 6,
+    "unit": "packs",
+    "condition": "Packaged",
+    "price": 22000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Dapur Sehat, Jl. Anggrek No. 5, Jakarta Selatan",
+    "pickupLat": -6.25,
+    "pickupLng": 106.81,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/mixed-fruit.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-24T14:08:31.013Z",
+    "updatedAt": "2026-10-24T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_009",
+    "title": "Tomat & Wortel Segar",
+    "description": "Tomat dan wortel segar dengan kualitas baik.",
+    "category": "Produce",
+    "quantity": 15,
+    "availableQuantity": 12,
+    "unit": "kg",
+    "condition": "Near-expiry",
+    "price": 15000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Gudang Pasar, Jl. Hayam Wuruk, Jakarta Barat",
+    "pickupLat": -6.16,
+    "pickupLng": 106.8,
+    "pickupDeadline": "2026-10-27T14:08:31.013Z",
+    "images": [
+      "/images/food/tomatoes-carrots.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-22T14:08:31.013Z",
+    "updatedAt": "2026-10-22T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_010",
+    "title": "Nasi Box Ayam",
+    "description": "Nasi box ayam siap santap dari dapur catering.",
+    "category": "Prepared Food",
+    "quantity": 40,
+    "availableQuantity": 35,
+    "unit": "packs",
+    "condition": "Packaged",
+    "price": 25000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Kantin Office Park, Jakarta Pusat",
+    "pickupLat": -6.2115,
+    "pickupLng": 106.8052,
+    "pickupDeadline": "2026-10-26T02:08:31.013Z",
+    "images": [
+      "/images/food/nasi-box.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-24T14:08:31.013Z",
+    "updatedAt": "2026-10-24T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_011",
+    "title": "Pasta Bolognese",
+    "description": "Pasta bolognese segar siap santap.",
+    "category": "Prepared Food",
+    "quantity": 20,
+    "availableQuantity": 18,
+    "unit": "packs",
+    "condition": "Fresh",
+    "price": 30000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Kafe Pasta, Jl. Senopati No. 20, Jakarta Selatan",
+    "pickupLat": -6.23,
+    "pickupLng": 106.81,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/pasta.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-23T14:08:31.013Z",
+    "updatedAt": "2026-10-23T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_012",
+    "title": "Snack Box Meeting",
+    "description": "Snack box isi beragam untuk acara, gratis untuk komunitas.",
+    "category": "Prepared Food",
+    "quantity": 50,
+    "availableQuantity": 50,
+    "unit": "boxes",
+    "condition": "Packaged",
+    "price": null,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Ruang Meeting, Jl. Gatot Subroto, Jakarta",
+    "pickupLat": -6.22,
+    "pickupLng": 106.82,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/chips.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-24T14:08:31.013Z",
+    "updatedAt": "2026-10-24T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_013",
+    "title": "Yogurt Plain",
+    "description": "Yogurt plain kemasan dengan tanggal terbaik segera.",
+    "category": "Dairy",
+    "quantity": 24,
+    "availableQuantity": 20,
+    "unit": "cups",
+    "condition": "Near-expiry",
+    "price": 14000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Kulkas Toko, Jl. Melati No. 10, Jakarta Pusat",
+    "pickupLat": -6.2088,
+    "pickupLng": 106.8456,
+    "pickupDeadline": "2026-10-27T14:08:31.013Z",
+    "images": [
+      "/images/food/yogurt.jpg"
+    ],
+    "status": "UNAVAILABLE",
+    "createdAt": "2026-10-20T14:08:31.013Z",
+    "updatedAt": "2026-10-20T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_014",
+    "title": "Keju Cheddar",
+    "description": "Keju cheddar blok berkualitas.",
+    "category": "Dairy",
+    "quantity": 12,
+    "availableQuantity": 10,
+    "unit": "blocks",
+    "condition": "Fresh",
+    "price": 35000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Dairy Shelf, Jl. Anggrek No. 5, Jakarta Selatan",
+    "pickupLat": -6.25,
+    "pickupLng": 106.81,
+    "pickupDeadline": "2026-10-30T14:08:31.013Z",
+    "images": [
+      "/images/food/cheese.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-19T14:08:31.013Z",
+    "updatedAt": "2026-10-19T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_015",
+    "title": "Susu Kedelai",
+    "description": "Susu kedelai kemasan siap minum.",
+    "category": "Beverages",
+    "quantity": 30,
+    "availableQuantity": 30,
+    "unit": "bottles",
+    "condition": "Packaged",
+    "price": 16000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Minimarket, Jl. Hayam Wuruk, Jakarta Barat",
+    "pickupLat": -6.16,
+    "pickupLng": 106.8,
+    "pickupDeadline": "2026-10-29T14:08:31.013Z",
+    "images": [
+      "/images/food/soy-milk.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-22T14:08:31.013Z",
+    "updatedAt": "2026-10-22T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_016",
+    "title": "Kue Kering Lebaran",
+    "description": "Kue kering asinan berbagai rasa.",
+    "category": "Snacks",
+    "quantity": 100,
+    "availableQuantity": 80,
+    "unit": "boxes",
+    "condition": "Fresh",
+    "price": 45000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Toko Kue, Jl. Sabang No. 12, Jakarta Pusat",
+    "pickupLat": -6.185,
+    "pickupLng": 106.83,
+    "pickupDeadline": "2026-11-01T14:08:31.013Z",
+    "images": [
+      "/images/food/cookies.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-18T14:08:31.013Z",
+    "updatedAt": "2026-10-18T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_017",
+    "title": "Keripik Singkong",
+    "description": "Keripik singkong renyah kemasan.",
+    "category": "Snacks",
+    "quantity": 60,
+    "availableQuantity": 55,
+    "unit": "packs",
+    "condition": "Packaged",
+    "price": 12000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Snack Corner, Jl. Barito No. 8, Jakarta Selatan",
+    "pickupLat": -6.26,
+    "pickupLng": 106.8,
+    "pickupDeadline": "2026-11-04T14:08:31.013Z",
+    "images": [
+      "/images/food/chips.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-21T14:08:31.013Z",
+    "updatedAt": "2026-10-21T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_018",
+    "title": "Beras Pulen 5kg",
+    "description": "Beras pulen kualitas premium.",
+    "category": "Pantry",
+    "quantity": 20,
+    "availableQuantity": 18,
+    "unit": "bags",
+    "condition": "Fresh",
+    "price": 65000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Gudang Sembako, Jl. Gatot Subroto, Jakarta",
+    "pickupLat": -6.22,
+    "pickupLng": 106.82,
+    "pickupDeadline": "2026-11-24T14:08:31.013Z",
+    "images": [
+      "/images/food/rice.jpg"
+    ],
+    "status": "UNAVAILABLE",
+    "createdAt": "2026-10-17T14:08:31.013Z",
+    "updatedAt": "2026-10-17T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_019",
+    "title": "Minyak Goreng 2L",
+    "description": "Minyak goreng kemasan 2 liter.",
+    "category": "Pantry",
+    "quantity": 15,
+    "availableQuantity": 12,
+    "unit": "bottles",
+    "condition": "Packaged",
+    "price": 28000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Rak Sembako, Jl. Hayam Wuruk, Jakarta Barat",
+    "pickupLat": -6.16,
+    "pickupLng": 106.8,
+    "pickupDeadline": "2026-12-24T14:08:31.013Z",
+    "images": [
+      "/images/food/cooking-oil.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-16T14:08:31.013Z",
+    "updatedAt": "2026-10-16T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_020",
+    "title": "Jus Buah Segar",
+    "description": "Jus buah segar tanpa pengawet.",
+    "category": "Beverages",
+    "quantity": 30,
+    "availableQuantity": 25,
+    "unit": "bottles",
+    "condition": "Fresh",
+    "price": 15000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Juice Bar, Jl. Senopati No. 20, Jakarta Selatan",
+    "pickupLat": -6.23,
+    "pickupLng": 106.81,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/juice.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-24T14:08:31.013Z",
+    "updatedAt": "2026-10-24T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_021",
+    "title": "Daging Ayam Potong",
+    "description": "Daging ayam potong segar.",
+    "category": "Meat",
+    "quantity": 10,
+    "availableQuantity": 8,
+    "unit": "kg",
+    "condition": "Fresh",
+    "price": 45000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Pasar Daging, Jl. Barito No. 8, Jakarta Selatan",
+    "pickupLat": -6.26,
+    "pickupLng": 106.8,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/chicken.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-23T14:08:31.013Z",
+    "updatedAt": "2026-10-23T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_022",
+    "title": "Paket Sembako",
+    "description": "Paket sembako hemat untuk keluarga.",
+    "category": "Other",
+    "quantity": 25,
+    "availableQuantity": 20,
+    "unit": "packs",
+    "condition": "Packaged",
+    "price": 80000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Posko Bantuan, Jl. Anggrek No. 5, Jakarta Selatan",
+    "pickupLat": -6.25,
+    "pickupLng": 106.81,
+    "pickupDeadline": "2026-10-28T14:08:31.013Z",
+    "images": [
+      "/images/food/grocery.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-20T14:08:31.013Z",
+    "updatedAt": "2026-10-20T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_023",
+    "title": "Donat Cokelat",
+    "description": "Donat cokelat lembut sisa produksi.",
+    "category": "Bakery",
+    "quantity": 36,
+    "availableQuantity": 30,
+    "unit": "pieces",
+    "condition": "Fresh",
+    "price": 12000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Donut Shop, Jl. Sabang No. 12, Jakarta Pusat",
+    "pickupLat": -6.185,
+    "pickupLng": 106.83,
+    "pickupDeadline": "2026-10-26T14:08:31.013Z",
+    "images": [
+      "/images/food/donuts.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-24T14:08:31.013Z",
+    "updatedAt": "2026-10-24T14:08:31.013Z"
+  },
+  {
+    "id": "listing_demo_024",
+    "title": "Apel Fuji",
+    "description": "Apel Fuji segar impor.",
+    "category": "Produce",
+    "quantity": 50,
+    "availableQuantity": 45,
+    "unit": "kg",
+    "condition": "Near-expiry",
+    "price": 12000,
+    "currency": "IDR",
+    "sellerId": "user_demo_seller_001",
+    "pickupLocation": "Buah Segar, Jl. Melati No. 10, Jakarta Pusat",
+    "pickupLat": -6.2088,
+    "pickupLng": 106.8456,
+    "pickupDeadline": "2026-10-29T14:08:31.013Z",
+    "images": [
+      "/images/food/apples.jpg"
+    ],
+    "status": "AVAILABLE",
+    "createdAt": "2026-10-23T14:08:31.013Z",
+    "updatedAt": "2026-10-23T14:08:31.013Z"
+  }
+];
 
   const DEMO_RESERVATIONS = [
     { id: 'res_demo_001', listingId: 'listing_demo_002', receiverId: 'user_demo_receiver_001', quantity: 5, status: 'PENDING', notes: 'Mohon konfirmasi', pickupInstructions: null, createdAt: new Date(Date.now() - 86400000 * 1).toISOString(), updatedAt: new Date(Date.now() - 86400000 * 1).toISOString() },
@@ -26,8 +574,8 @@
   ];
 
   const DEMO_NOTIFICATIONS = [
-    { id: 'notif_demo_001', title: 'Permintaan Reservasi Baru', message: 'Siti Rahayu meminta 5 kg Roti Tantan Segar.', type: 'RESERVATION_REQUEST', read: false, userId: 'user_demo_seller_001', listingId: 'listing_demo_001', reservationId: 'res_demo_002', createdAt: new Date(Date.now() - 86400000 * 1).toISOString() },
-    { id: 'notif_demo_002', title: 'Reservasi Disetujui', message: 'Permintaan Anda untuk Buah-organisasi Segar telah disetujui.', type: 'RESERVATION_APPROVED', read: true, userId: 'user_demo_receiver_001', listingId: 'listing_demo_002', reservationId: 'res_demo_001', createdAt: new Date(Date.now() - 86400000 * 2).toISOString() },
+    { id: 'notif_demo_001', title: 'Permintaan Reservasi Baru', message: 'Siti Rahayu meminta 5 pieces Paket Roti & Pastri Segar.', type: 'RESERVATION_REQUEST', read: false, userId: 'user_demo_seller_001', listingId: 'listing_demo_001', reservationId: 'res_demo_002', createdAt: new Date(Date.now() - 86400000 * 1).toISOString() },
+    { id: 'notif_demo_002', title: 'Reservasi Disetujui', message: 'Permintaan Anda untuk Paket Buah Segar telah disetujui.', type: 'RESERVATION_APPROVED', read: true, userId: 'user_demo_receiver_001', listingId: 'listing_demo_002', reservationId: 'res_demo_001', createdAt: new Date(Date.now() - 86400000 * 2).toISOString() },
     { id: 'notif_demo_003', title: 'Sistem', message: 'Selamat datang di SIRKULA demo. Semua data disimpan di browser Anda.', type: 'SYSTEM', read: false, userId: 'user_demo_receiver_001', listingId: null, reservationId: null, createdAt: new Date(Date.now() - 86400000 * 7).toISOString() },
   ];
 
@@ -61,29 +609,47 @@
   function _initStore() {
     const existing = _read();
     if (existing) {
-      // Demo data migration: ensure seeded listings carry local food photos
-      if (!existing._version || existing._version < 2) {
-        const byId = {};
-        DEMO_LISTINGS.forEach((l) => { byId[l.id] = l; });
-        (existing.listings || []).forEach((l) => {
-          const seed = byId[l.id];
-          if (seed && (!Array.isArray(l.images) || l.images.length === 0)) {
-            l.images = _clone(seed.images);
-          }
-        });
-        existing._version = 2;
-        _write(existing);
-      }
+      // Migrate seeded demo records in place without deleting any user-created data.
+      let changed = false;
+      const seedById = new Map(DEMO_LISTINGS.map((listing) => [listing.id, listing]));
+      const oldSeedTitles = new Set(['Roti Tantan Segar', 'Buah-organisasi Segar', 'Makanan Siap Pakai Bekas Catering', 'Susu UHT Dekat Expired']);
+      (existing.listings || []).forEach((listing) => {
+        const seed = seedById.get(listing.id);
+        if (!seed) return;
+        const repairImages = existing._version !== 6 || !Array.isArray(listing.images) || listing.images.length === 0;
+        if (repairImages) { listing.images = _clone(seed.images); changed = true; }
+        if (oldSeedTitles.has(listing.title)) { listing.title = seed.title; listing.description = seed.description; changed = true; }
+      });
+      (existing.notifications || []).forEach((notification) => {
+        if (String(notification.message || '').includes('Buah-organisasi Segar')) { notification.message = notification.message.replace(/Buah-organisasi Segar/g, 'Paket Buah Segar'); changed = true; }
+        if (String(notification.message || '').includes('Roti Tantan Segar')) { notification.message = notification.message.replace(/Roti Tantan Segar/g, 'Paket Roti & Pastri Segar'); changed = true; }
+      });
+      const existingListingIds = new Set((existing.listings || []).map((item) => item.id));
+      DEMO_LISTINGS.forEach((seed) => {
+        if (!existingListingIds.has(seed.id)) {
+          (existing.listings = existing.listings || []).push(_clone(seed));
+          changed = true;
+        }
+      });
+      const existingUserIds = new Set((existing.users || []).map((item) => item.id));
+      DEMO_USERS.forEach((seed) => {
+        if (!existingUserIds.has(seed.id)) {
+          (existing.users = existing.users || []).push(_clone(seed));
+          changed = true;
+        }
+      });
+      if (existing._version !== 6) { existing._version = 6; changed = true; }
+      if (changed) _write(existing);
       _store = existing;
       return;
     }
-    _store = { users: _clone(DEMO_USERS), listings: _clone(DEMO_LISTINGS), reservations: _clone(DEMO_RESERVATIONS), notifications: _clone(DEMO_NOTIFICATIONS), reports: [], auditLogs: [], _version: 2, _createdAt: _nowISO() };
+    _store = { users: _clone(DEMO_USERS), listings: _clone(DEMO_LISTINGS), reservations: _clone(DEMO_RESERVATIONS), notifications: _clone(DEMO_NOTIFICATIONS), reports: [], auditLogs: [], _version: 6, _createdAt: _nowISO() };
     _write(_store);
   }
   const storage = {
     init: function () { _initStore(); },
     reset: function () {
-      _store = { users: _clone(DEMO_USERS), listings: _clone(DEMO_LISTINGS), reservations: _clone(DEMO_RESERVATIONS), notifications: _clone(DEMO_NOTIFICATIONS), reports: [], auditLogs: [], _version: 2, _createdAt: _nowISO() };
+      _store = { users: _clone(DEMO_USERS), listings: _clone(DEMO_LISTINGS), reservations: _clone(DEMO_RESERVATIONS), notifications: _clone(DEMO_NOTIFICATIONS), reports: [], auditLogs: [], _version: 6, _createdAt: _nowISO() };
       _persist(); return _clone(_store);
     },
     dump: function () { return _store ? _clone(_store) : null; },
@@ -115,7 +681,7 @@
         if (filter.status) items = items.filter((l) => l.status === filter.status);
         if (filter.sellerId) items = items.filter((l) => l.sellerId === filter.sellerId);
         if (filter.category) items = items.filter((l) => l.category === filter.category);
-        if (filter.q) { const q = filter.q.toLowerCase(); items = items.filter((l) => (l.title || '').toLowerCase().includes(q) || (l.category || '').toLowerCase().includes(q)); }
+        if (filter.q) { const q = String(filter.q).trim().toLowerCase(); items = items.filter((l) => [l.title, l.description, l.category, l.pickupLocation, l.condition].some((value) => String(value || '').toLowerCase().includes(q))); }
         items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       }
       return _clone(items);
@@ -123,7 +689,7 @@
     getListingById: function (id) { return _store ? _clone(_findById(_store.listings, id)) : null; },
     createListing: function (data) {
       if (!_store) return null;
-      const listing = { id: _generateId('listing'), title: data.title || '', description: data.description || null, category: data.category || 'Other', quantity: Number(data.quantity) || 0, availableQuantity: Number(data.availableQuantity || data.quantity) || 0, unit: data.unit || 'pieces', condition: data.condition || 'Fresh', price: data.price != null ? Number(data.price) : null, currency: data.currency || 'IDR', sellerId: data.sellerId, pickupLocation: data.pickupLocation || '', pickupLat: data.pickupLat != null ? Number(data.pickupLat) : null, pickupLng: data.pickupLng != null ? Number(data.pickupLng) : null, pickupDeadline: data.pickupDeadline || _nowISO(), images: Array.isArray(data.images) ? data.images : [], status: data.status || 'AVAILABLE', createdAt: _nowISO(), updatedAt: _nowISO() };
+      const listing = { id: _generateId('listing'), title: data.title || '', description: data.description || null, category: data.category || 'Other', quantity: Number(data.quantity) || 0, availableQuantity: Number(data.availableQuantity != null ? data.availableQuantity : data.quantity) || 0, unit: data.unit || 'pieces', condition: data.condition || 'Fresh', price: data.price != null ? Number(data.price) : null, currency: data.currency || 'IDR', sellerId: data.sellerId, pickupLocation: data.pickupLocation || '', pickupLat: data.pickupLat != null ? Number(data.pickupLat) : null, pickupLng: data.pickupLng != null ? Number(data.pickupLng) : null, pickupDeadline: data.pickupDeadline || _nowISO(), images: Array.isArray(data.images) ? data.images : [], status: data.status || 'AVAILABLE', createdAt: _nowISO(), updatedAt: _nowISO() };
       _store.listings.push(listing); _persist(); return _clone(listing);
     },
     updateListing: function (id, data) {
@@ -152,8 +718,19 @@
     },
     getReservationById: function (id) { return _store ? _clone(_findById(_store.reservations, id)) : null; },
     createReservation: function (data) {
-      if (!_store) return null;
-      const reservation = { id: _generateId('res'), listingId: data.listingId, receiverId: data.receiverId, quantity: Number(data.quantity) || 0, status: 'PENDING', notes: data.notes || null, pickupInstructions: data.pickupInstructions || null, createdAt: _nowISO(), updatedAt: _nowISO() };
+      if (!_store || !data) return null;
+      const listing = _findById(_store.listings, data.listingId);
+      const receiver = _findById(_store.users, data.receiverId);
+      const quantity = Number(data.quantity);
+      if (!listing || listing.status !== 'AVAILABLE') throw new Error('Listing ini sudah tidak tersedia.');
+      if (!receiver || receiver.role !== 'RECEIVER') throw new Error('Hanya akun Receiver yang dapat membuat reservasi.');
+      if (!Number.isFinite(quantity) || quantity <= 0) throw new Error('Jumlah reservasi harus lebih besar dari 0.');
+      const available = Number(listing.availableQuantity != null ? listing.availableQuantity : listing.quantity) || 0;
+      const pendingForListing = _store.reservations
+        .filter((reservation) => reservation.listingId === listing.id && reservation.status === 'PENDING')
+        .reduce((sum, reservation) => sum + (Number(reservation.quantity) || 0), 0);
+      if (quantity + pendingForListing > available) throw new Error('Jumlah melebihi stok tersedia setelah memperhitungkan permintaan yang menunggu.');
+      const reservation = { id: _generateId('res'), listingId: data.listingId, receiverId: data.receiverId, quantity, status: 'PENDING', notes: data.notes || null, pickupInstructions: data.pickupInstructions || null, createdAt: _nowISO(), updatedAt: _nowISO() };
       _store.reservations.push(reservation); _persist(); return _clone(reservation);
     },
     updateReservation: function (id, data) {
@@ -230,21 +807,29 @@
 
   const auth = {
     login: function (email, password, role) {
-      if (!email || !String(email).trim()) return { ok: false, error: 'Email/username harus diisi.' };
-      if (!password || !String(password).trim()) return { ok: false, error: 'Password harus diisi.' };
-      if (!role) return { ok: false, error: 'Pilih role terlebih dahulu.' };
-      var demoUserIdMap = {
-        SELLER: 'user_demo_seller_001',
-        RECEIVER: 'user_demo_receiver_001',
-        ADMIN: 'user_demo_admin_001',
-      };
-      var trimmedEmail = String(email).trim();
-      var sessionUser = {
-        id: demoUserIdMap[role] || ('demo_' + String(role).toLowerCase() + '_' + Date.now()),
-        email: trimmedEmail,
-        name: trimmedEmail.split('@')[0] || role,
-        role: role,
-        status: 'ACTIVE',
+      const trimmedEmail = String(email || '').trim();
+      if (!trimmedEmail) return { ok: false, error: 'Email/username harus diisi.' };
+      if (!String(password || '').trim()) return { ok: false, error: 'Password harus diisi.' };
+      if (!['SELLER', 'RECEIVER', 'ADMIN'].includes(role)) return { ok: false, error: 'Pilih role demo terlebih dahulu.' };
+
+      // Demo-only role switching: use a local demo profile and never persist a password.
+      if (!_store) _initStore();
+      const emailKey = trimmedEmail.toLowerCase();
+      const registeredProfile = _store.users.find((user) => user.role === role && String(user.email || '').toLowerCase() === emailKey);
+      const demoProfile = registeredProfile || _store.users.find((user) => user.role === role);
+      if (!demoProfile) return { ok: false, error: 'Profil demo untuk role ini tidak tersedia.' };
+      if (!registeredProfile) {
+        const typedName = trimmedEmail.split('@')[0].replace(/[._-]+/g, ' ').trim();
+        const displayName = typedName.replace(/\b\w/g, (letter) => letter.toUpperCase()) || demoProfile.name;
+        Object.assign(demoProfile, { email: trimmedEmail, name: displayName, updatedAt: _nowISO() });
+        _persist();
+      }
+      const sessionUser = {
+        id: demoProfile.id,
+        email: demoProfile.email,
+        name: demoProfile.name,
+        role: demoProfile.role,
+        status: demoProfile.status || 'ACTIVE',
       };
       session.set(sessionUser);
       return { ok: true, user: sessionUser };

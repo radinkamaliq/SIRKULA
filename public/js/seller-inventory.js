@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function render() {
     container.innerHTML = '';
     if (!listings.length) {
-      container.innerHTML = '<div class="empty-state"><p>No listings yet. Create your first listing.</p><a href="/create-listing.html" class="btn btn-primary">+ New Listing</a></div>';
+      container.innerHTML = '<div class="empty-state"><p>' + window.SIRKULA.t('No listings yet. Create your first listing.') + '</p><a href="/create-listing.html" class="btn btn-primary">' + window.SIRKULA.t('+ New Listing') + '</a></div>';
       return;
     }
     listings.forEach((l) => {
@@ -52,36 +52,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.SIRKULA = window.SIRKULA || {};
 window.SIRKULA.editListing = function (id) {
-  window.location.href = '/edit-listing.html?id=' + id;
+  window.location.href = '/create-listing.html?id=' + encodeURIComponent(id);
 };
 window.SIRKULA.archiveListing = async function (id) {
-  if (!confirm('Archive this listing?')) return;
+  if (!confirm(window.SIRKULA.t('Archive this listing?'))) return;
   try {
     const updated = window.SIRKULA.storage.updateListing(id, { status: 'UNAVAILABLE' });
     if (updated) {
-      window.SIRKULA.toast('Listing archived', 'success');
+      window.SIRKULA.toast(window.SIRKULA.t('Listing archived'), 'success');
       location.reload();
     } else {
-      window.SIRKULA.toast('Archive failed', 'error');
+      window.SIRKULA.toast(window.SIRKULA.t('Archive failed'), 'error');
     }
   } catch (e) { window.SIRKULA.toast(e.message || 'Archive failed', 'error'); }
 };
 window.SIRKULA.deleteListing = function (id) {
-  if (!confirm('Delete this listing? (only allowed if no active reservations)')) return;
+  if (!confirm(window.SIRKULA.t('Delete this listing? (only allowed if no active reservations)'))) return;
   try {
     // Check for active reservations
     const reservations = window.SIRKULA.storage.getReservations({ listingId: id });
     const active = reservations.filter((r) => r.status === 'PENDING' || r.status === 'APPROVED');
     if (active.length > 0) {
-      window.SIRKULA.toast('Cannot delete listing with active reservations', 'error');
+      window.SIRKULA.toast(window.SIRKULA.t('Cannot delete listing with active reservations'), 'error');
       return;
     }
     const ok = window.SIRKULA.storage.deleteListing(id);
     if (ok) {
-      window.SIRKULA.toast('Listing deleted', 'success');
+      window.SIRKULA.toast(window.SIRKULA.t('Listing deleted'), 'success');
       location.reload();
     } else {
-      window.SIRKULA.toast('Delete failed', 'error');
+      window.SIRKULA.toast(window.SIRKULA.t('Delete failed'), 'error');
     }
   } catch (e) { window.SIRKULA.toast(e.message || 'Delete failed', 'error'); }
 };
